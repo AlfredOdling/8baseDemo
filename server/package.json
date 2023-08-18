@@ -1,0 +1,11 @@
+{
+  "name": "est",
+  "version": "1.0.0",
+  "description": "8base Custom Logic",
+  "dependencies": {
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "8base-cli-types": "^0.3.3"
+  }
+}
