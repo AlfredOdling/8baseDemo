@@ -2,14 +2,14 @@ import { Routes, Route } from 'react-router-dom'
 
 import { ProtectedRoute } from './auth'
 import { GetApiKey } from '../pages/GetApiKey'
+import { Contents } from '../pages/Contents'
 import { Content } from '../pages/Content'
-import { NewContent } from '../pages/NewContent'
 import { LoginSignUp } from '../pages/LoginSignUp'
 
 export const paths = {
   _: '/',
   getApiKey: '/',
-  content: '/content',
+  contents: '/contents',
   loginSignUp: '/loginSignUp',
 }
 
@@ -22,11 +22,11 @@ export const routes = (
       element={<ProtectedRoute component={GetApiKey} />}
     />
 
-    <Route path={paths.content}>
-      <Route index element={<ProtectedRoute component={Content} />} />
+    <Route path={paths.contents}>
+      <Route index element={<ProtectedRoute component={Contents} />} />
       <Route
         path=":contentId"
-        element={<ProtectedRoute component={NewContent} />}
+        element={<ProtectedRoute component={Content} />}
       />
     </Route>
 

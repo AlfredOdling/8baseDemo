@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
-import { client8Base } from './client'
+import { client8Base } from '../client'
 
-export function useUser() {
-  const mutation = useMutation({
+export const useUpdateUser = () =>
+  useMutation({
     mutationKey: ['user'],
 
     mutationFn: async (data_: any) => {
@@ -22,6 +22,3 @@ export function useUser() {
       return res
     },
   })
-
-  return { mutation }
-}

@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
 
-export const useContentTexts = () =>
+export const useContentTextsList = () =>
   useQuery({
-    queryKey: ['contentTexts'],
+    queryKey: ['contentTextsList'],
 
     queryFn: async (data_: any) => {
       const query = gql`
@@ -12,6 +12,7 @@ export const useContentTexts = () =>
           contentTextsList {
             items {
               id
+              text
             }
           }
         }

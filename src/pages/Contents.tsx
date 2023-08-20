@@ -8,7 +8,7 @@ import { useContent } from '../api/useContent'
 
 const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
 
-export function Content() {
+export function Contents() {
   const navigate = useNavigate()
   const { contentCreate, contentsList } = useContent()
 

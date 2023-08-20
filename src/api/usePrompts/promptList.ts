@@ -2,17 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
 
-export const useContentsList = () =>
+export const usePromptsList = () =>
   useQuery({
-    queryKey: ['contentsList'],
+    queryKey: ['prompts'],
 
     queryFn: async () => {
       const query = gql`
-        query contentsList {
-          contentsList {
+        query promptsList {
+          promptsList {
             items {
+              prompt
               id
-              title
             }
           }
         }
@@ -21,5 +21,5 @@ export const useContentsList = () =>
       return res
     },
 
-    select: (data: any) => data?.contentsList?.items,
+    select: (data: any) => data?.promptsList?.items,
   })

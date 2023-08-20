@@ -17,7 +17,7 @@ export function GetApiKey() {
   const [openApiKey, setOpenAIKey] = useState<string>('')
   const navigate = useNavigate()
 
-  const { mutation } = useUser()
+  const { updateUser } = useUser()
 
   return (
     <motion.div
@@ -47,7 +47,7 @@ export function GetApiKey() {
           />
 
           <Button
-            onClick={() => mutation.mutate({ openApiKey })}
+            onClick={() => updateUser.mutate({ openApiKey })}
             sx={{ mt: 4 }}
             // disabled={!openAIKey}
           >
@@ -55,7 +55,7 @@ export function GetApiKey() {
           </Button>
 
           <Button
-            onClick={() => navigate(paths.content)}
+            onClick={() => navigate(paths.contents)}
             sx={{ mt: 4 }}
             // disabled={!openAIKey}
           >

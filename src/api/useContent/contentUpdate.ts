@@ -5,9 +5,9 @@ import axios from 'axios'
 import { client8Base } from '../client'
 import { queryClient } from '../..'
 
-export const useGenerateContentText = () =>
+export const useContentUpdate = () =>
   useMutation({
-    mutationKey: ['generateContentText'],
+    mutationKey: ['content'],
 
     mutationFn: (payload: any) => {
       return axios.post(
@@ -20,10 +20,10 @@ export const useGenerateContentText = () =>
       )
     },
 
-    onSuccess: data => {
+    onSuccess: (data, variables) => {
       const mutation = gql`
-        mutation GenerateContentText($data: ContentCreateInput!) {
-          contentCreate(data: $data) {
+        mutation ContentUpdate($data: ContentUpdateInput!) {
+          contentUpdate(data: $data) {
             id
           }
         }
@@ -31,6 +31,7 @@ export const useGenerateContentText = () =>
       client8Base
         .request(mutation, {
           data: {
+            id: variables.contentId,
             title: data.data.title.output_text,
             user: {
               connect: {

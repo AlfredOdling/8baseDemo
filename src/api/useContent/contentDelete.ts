@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
+import { queryClient } from '../..'
 
 export const useContentDelete = () => {
   const navigate = useNavigate()
@@ -13,7 +14,7 @@ export const useContentDelete = () => {
       const mutation = gql`
         mutation ContentDelete($data: ContentDeleteInput!) {
           contentDelete(data: $data) {
-            id
+            success
           }
         }
       `
@@ -33,6 +34,7 @@ export const useContentDelete = () => {
 
     onSuccess: (data: any, variables, ctx) => {
       navigate(data?.contentDelete.id)
+      queryClient.invalidateQueries({ queryKey: ['content'] })
     },
   })
 }
