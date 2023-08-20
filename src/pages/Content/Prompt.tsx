@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { Button, Stack, Grid, IconButton, Typography, Textarea } from '@mui/joy'
 import {
   LiaCheckSolid,
@@ -9,16 +10,18 @@ import {
   LiaTrashSolid,
 } from 'react-icons/lia'
 
-import { usePrompts } from '../../api/usePrompts'
-import { useContent } from '../../api/useContent'
+import { usePromptDelete } from '../../api/usePrompts/promptDelete'
+import { usePromptUpdate } from '../../api/usePrompts/promptUpdate'
+import { useContentTextCreate } from '../../api/useContent/contentTextCreate'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const [edit, setEdit] = useState(false)
   const [input, setInput] = useState(item.prompt)
-
   const { contentId } = useParams()
-  const { promptDelete, promptUpdate } = usePrompts()
-  const { contentUpdate } = useContent(contentId)
+
+  const promptDelete = usePromptDelete()
+  const promptUpdate = usePromptUpdate()
+  const contentUpdate = useContentTextCreate()
 
   return (
     <Grid xs={4}>

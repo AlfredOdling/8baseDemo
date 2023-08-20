@@ -8,7 +8,7 @@ import Input from '@mui/joy/Input'
 import Card from '@mui/joy/Card'
 
 import { paths } from '../shared/routes'
-import { useUser } from '../api/useUser'
+import { useUpdateUser } from '../api/useUser/updateUser'
 
 const gradientBackground = 'linear-gradient(45deg, #FFFFFF 100%, #FFFFFF 100%)'
 const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
@@ -16,8 +16,7 @@ const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
 export function GetApiKey() {
   const [openApiKey, setOpenAIKey] = useState<string>('')
   const navigate = useNavigate()
-
-  const { updateUser } = useUser()
+  const updateUser = useUpdateUser()
 
   return (
     <motion.div

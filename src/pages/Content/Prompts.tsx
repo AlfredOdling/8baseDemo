@@ -1,11 +1,13 @@
 import { Stack, Grid, IconButton, Typography } from '@mui/joy'
 import { LiaPlusSolid, LiaSpinnerSolid } from 'react-icons/lia'
 
-import { usePrompts } from '../../api/usePrompts'
 import { Prompt } from './Prompt'
+import { usePromptCreate } from '../../api/usePrompts/promptCreate'
+import { usePromptsList } from '../../api/usePrompts/promptList'
 
 export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
-  const { promptCreate, promptsList } = usePrompts()
+  const promptCreate = usePromptCreate()
+  const promptsList = usePromptsList()
 
   return (
     <>
@@ -32,6 +34,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {promptsList.data?.map((item: any) => (
           <Prompt
+            key={`${item.id}-promt`}
             item={item}
             selectValue={selectValue}
             urlValue={urlValue}

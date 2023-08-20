@@ -4,13 +4,18 @@ import { motion } from 'framer-motion'
 import { Divider, Typography } from '@mui/joy'
 import { LiaPlusSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
-import { useContent } from '../api/useContent'
+
+import { useContentCreate } from '../api/useContent/contentCreate'
+import { useContents } from '../api/useContent/contents'
+import { useContentDelete } from '../api/useContent/contentDelete'
 
 const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
 
 export function Contents() {
   const navigate = useNavigate()
-  const { contentCreate, contentsList } = useContent()
+  const contentCreate = useContentCreate()
+  const contentDelete = useContentDelete()
+  const contentsList = useContents()
 
   return (
     <motion.div
@@ -24,7 +29,6 @@ export function Contents() {
       }}
     >
       <Stack
-        height={'600px'}
         width={'800px'}
         alignItems={'flex-start'}
         borderRadius={6}
@@ -42,6 +46,7 @@ export function Contents() {
           justifyContent={'space-between'}
         >
           <Typography level="h2">Content creation</Typography>
+          <Divider />
 
           <Button
             loading={contentCreate.isLoading}
@@ -51,18 +56,27 @@ export function Contents() {
             New
           </Button>
         </Stack>
+        <Divider />
 
         {contentsList.isLoading ? (
           <Typography level="h3">Loading...</Typography>
         ) : (
           contentsList.data.map((item: any) => (
-            <Button key={item.id} onClick={() => navigate(item.id)}>
-              {item.title}
-            </Button>
+            <Stack direction={'row'} spacing={2}>
+              <Button key={item.id} onClick={() => navigate(item.id)}>
+                {item.title}
+              </Button>
+
+              <Button
+                key={item.id}
+                loading={contentDelete.isLoading}
+                onClick={() => contentDelete.mutate(item.id)}
+              >
+                Delete
+              </Button>
+            </Stack>
           ))
         )}
-
-        <Divider />
       </Stack>
     </motion.div>
   )

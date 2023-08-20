@@ -5,7 +5,7 @@ import axios from 'axios'
 import { client8Base } from '../client'
 import { queryClient } from '../..'
 
-export const useContentUpdate = () =>
+export const useContentTextCreate = () =>
   useMutation({
     mutationKey: ['content'],
 
@@ -28,6 +28,7 @@ export const useContentUpdate = () =>
           }
         }
       `
+
       client8Base
         .request(mutation, {
           data: {
@@ -46,7 +47,9 @@ export const useContentUpdate = () =>
           },
         })
         .then(() => {
-          queryClient.invalidateQueries({ queryKey: ['contents'] })
+          console.log('success')
+
+          queryClient.invalidateQueries({ queryKey: ['content'] })
         })
     },
   })

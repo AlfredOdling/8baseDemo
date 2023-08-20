@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+
 import { LiaLockSolid, LiaUnlockSolid } from 'react-icons/lia'
 import {
   Button,
@@ -13,19 +13,23 @@ import {
   Typography,
 } from '@mui/joy'
 
-import { usePersistState } from '../../shared/hooks'
-import { useContent } from '../../api/useContent'
 import { Prompts } from './Prompts'
+import { usePersistState } from '../../shared/hooks'
+import { useContentTextDelete } from '../../api/useContent/contentTextDelete'
+import { useParams } from 'react-router-dom'
+import { useContent } from '../../api/useContent/content'
 
 export function Content() {
   const [lock, setLock] = usePersistState('lock', false)
   const [selectValue, setSelectValue] = useState<string | null>('website')
+  const [textValue, setTextValue] = useState('')
   const [urlValue, setUrlValue] = useState(
     'https://docs.8base.com/projects/frontend/getting-started-introduction'
   )
-  const [textValue, setTextValue] = useState('')
+
   const { contentId } = useParams()
-  const { contentTextsList } = useContent(contentId)
+  const content = useContent(contentId!)
+  const contentTextDelete = useContentTextDelete()
 
   return (
     <motion.div
@@ -49,7 +53,7 @@ export function Content() {
         }}
         spacing={3}
       >
-        <Typography level="h4">{'content.data.title'}</Typography>
+        <Typography level="h4">{content.data?.title || 'Untitled'}</Typography>
 
         <Stack direction={'row'} spacing={1}>
           {selectValue === 'text' ? (
@@ -88,11 +92,20 @@ export function Content() {
 
         <Typography level="h4">Content</Typography>
 
-        {contentTextsList.isLoading ? (
+        {content.data?.isLoading ? (
           <Typography level="h3">Loading...</Typography>
         ) : (
-          contentTextsList.data.map((item: any) => (
-            <Button key={item.id}>{item.text}</Button>
+          content.data?.contentText?.items?.map((item: any) => (
+            <Stack direction={'row'} spacing={2} key={`${item.id}-content`}>
+              <Button>{item.text}</Button>
+
+              <Button
+                loading={contentTextDelete.isLoading}
+                onClick={() => contentTextDelete.mutate(item.id)}
+              >
+                Delete
+              </Button>
+            </Stack>
           ))
         )}
       </Stack>

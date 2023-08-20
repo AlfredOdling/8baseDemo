@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
 
-export const useContentsList = () =>
+export const useContents = () =>
   useQuery({
     queryKey: ['contentsList'],
 
