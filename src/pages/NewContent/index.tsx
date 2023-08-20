@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
 import {
+  Grid,
   IconButton,
   Input,
   Option,
@@ -11,11 +12,19 @@ import {
   Textarea,
   Typography,
 } from '@mui/joy'
-import { LiaLockSolid, LiaPenSolid, LiaUnlockSolid } from 'react-icons/lia'
+import {
+  LiaLockSolid,
+  LiaPenSolid,
+  LiaPlusSolid,
+  LiaSpinnerSolid,
+  LiaTrashSolid,
+  LiaUnlockSolid,
+} from 'react-icons/lia'
 
-import { useGenerateText, usePrompts } from '../../shared/api'
-import BasicModal from './Modal'
 import { usePersistState } from '../../shared/hooks'
+import { useParams } from 'react-router-dom'
+import { usePrompts } from '../../api/usePrompts'
+import { useContent } from '../../api/useContent'
 
 export function NewContent() {
   const [lock, setLock] = usePersistState('lock', false)
@@ -26,15 +35,9 @@ export function NewContent() {
   )
   const [textValue, setTextValue] = useState('')
 
-  const { mutation, query } = useGenerateText()
-  const usePrompts_ = usePrompts()
-
-  // const _10WordSummary = query.data?.filter(
-  //   (item: any) => item.summaryType === '10word'
-  // )[0]
-  // const _50WordSummary = query.data?.filter(
-  //   (item: any) => item.summaryType === '50word'
-  // )[0]
+  let { contentId } = useParams()
+  const { promptCreate, promptsList, promptDelete } = usePrompts()
+  const { contentTexts, generateContentText } = useContent(contentId)
 
   return (
     <motion.div
@@ -47,7 +50,6 @@ export function NewContent() {
       }}
     >
       <Stack
-        height={'600px'}
         width={'800px'}
         alignItems={'flex-start'}
         borderRadius={6}
@@ -59,9 +61,7 @@ export function NewContent() {
         }}
         spacing={3}
       >
-        <Typography level="h4">
-          {mutation.data?.data.title.output_text || 'Untitled'}
-        </Typography>
+        <Typography level="h4">{'content.data.title'}</Typography>
 
         <Stack direction={'row'} spacing={1}>
           {selectValue === 'text' ? (
@@ -93,45 +93,93 @@ export function NewContent() {
         </Stack>
 
         <Stack width={'100%'} direction={'row'} spacing={2}>
-          <Typography level="h4">
-            {mutation.data?.data.title.output_text || 'Untitled'}
-          </Typography>
+          <Typography level="h4">Prompts</Typography>
 
           <IconButton
             variant="solid"
             size="sm"
-            onClick={() => setModalOpen(!modalOpen)}
+            onClick={() =>
+              promptCreate.mutate({
+                user: {
+                  connect: {
+                    email: 'alfredodling@gmail.com',
+                  },
+                },
+              })
+            }
           >
-            <LiaPenSolid />
+            {promptCreate.isLoading ? <LiaSpinnerSolid /> : <LiaPlusSolid />}
           </IconButton>
         </Stack>
 
-        {usePrompts_.query.data?.map((item: any) => {
-          console.log('🚀  item:', item)
-
-          return (
-            <>
-              <Button
-                key={item.id}
-                loading={mutation.isLoading}
-                onClick={() =>
-                  mutation.mutate({
-                    summaryType: '50word',
-                    type: selectValue,
-                    url: urlValue,
-                    text: textValue,
-                    prompt: 'Write a 10 word summary',
-                  })
-                }
+        <Grid container spacing={2} sx={{ flexGrow: 1 }}>
+          {promptsList.data?.map((item: any) => (
+            <Grid xs={4}>
+              <Stack
+                alignItems={'flex-start'}
+                justifyContent={'space-between'}
+                bgcolor={'lightgrey'}
+                height={'110px'}
+                p={1.5}
+                borderRadius={6}
               >
-                {item.prompt}
-              </Button>
-            </>
-          )
-        })}
-      </Stack>
+                <Typography>{item.prompt}</Typography>
 
-      <BasicModal open={modalOpen} setOpen={setModalOpen} />
+                <Stack direction={'row'} spacing={1}>
+                  <Button
+                    key={item.id}
+                    loading={generateContentText.isLoading}
+                    onClick={() =>
+                      generateContentText.mutate({
+                        type: selectValue,
+                        url: urlValue,
+                        text: textValue,
+                        prompt: item.prompt,
+                      })
+                    }
+                  >
+                    Generate
+                  </Button>
+
+                  <IconButton
+                    variant="solid"
+                    size="sm"
+                    onClick={() => setModalOpen(!modalOpen)}
+                  >
+                    <LiaPenSolid />
+                  </IconButton>
+
+                  <IconButton
+                    variant="solid"
+                    size="sm"
+                    onClick={() =>
+                      promptDelete.mutate({
+                        id: item.id,
+                      })
+                    }
+                  >
+                    {promptDelete.isLoading ? (
+                      <LiaSpinnerSolid />
+                    ) : (
+                      <LiaTrashSolid />
+                    )}
+                  </IconButton>
+                </Stack>
+              </Stack>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Typography level="h4">Content</Typography>
+
+        {contentTexts.isLoading ? (
+          <Typography level="h3">Loading...</Typography>
+        ) : (
+          contentTexts.data.map((item: any) => (
+            <Button key={item.id}>{item.text}</Button>
+          ))
+        )}
+      </Stack>
     </motion.div>
   )
 }

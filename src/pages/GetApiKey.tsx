@@ -8,7 +8,7 @@ import Input from '@mui/joy/Input'
 import Card from '@mui/joy/Card'
 
 import { paths } from '../shared/routes'
-import { useUser } from '../shared/api'
+import { useUser } from '../api/useUser'
 
 const gradientBackground = 'linear-gradient(45deg, #FFFFFF 100%, #FFFFFF 100%)'
 const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'

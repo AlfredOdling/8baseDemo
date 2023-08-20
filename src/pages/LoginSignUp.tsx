@@ -1,8 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
-import Input from '@mui/joy/Input'
 import Card from '@mui/joy/Card'
 import { useAuth0 } from '@auth0/auth0-react'
 

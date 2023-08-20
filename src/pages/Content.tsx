@@ -1,17 +1,16 @@
 import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
-import Card from '@mui/joy/Card'
 import { motion } from 'framer-motion'
-import { Box, Divider, IconButton, SvgIcon, Typography } from '@mui/joy'
+import { Divider, Typography } from '@mui/joy'
 import { LiaPlusSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
-import { paths } from '../shared/routes'
+import { useContent } from '../api/useContent'
+
+const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
 
 export function Content() {
-  const gradientBackground =
-    'linear-gradient(45deg, #FFFFFF 100%, #FFFFFF 100%)'
-  const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
   const navigate = useNavigate()
+  const { contentCreate, contentsList } = useContent()
 
   return (
     <motion.div
@@ -43,13 +42,25 @@ export function Content() {
           justifyContent={'space-between'}
         >
           <Typography level="h2">Content creation</Typography>
+
           <Button
-            onClick={() => navigate(paths.newContent)}
+            loading={contentCreate.isLoading}
+            onClick={() => contentCreate.mutate()}
             endDecorator={<LiaPlusSolid />}
           >
             New
           </Button>
         </Stack>
+
+        {contentsList.isLoading ? (
+          <Typography level="h3">Loading...</Typography>
+        ) : (
+          contentsList.data.map((item: any) => (
+            <Button key={item.id} onClick={() => navigate(item.id)}>
+              {item.title}
+            </Button>
+          ))
+        )}
 
         <Divider />
       </Stack>

@@ -10,25 +10,26 @@ export const paths = {
   _: '/',
   getApiKey: '/',
   content: '/content',
-  newContent: '/newContent',
   loginSignUp: '/loginSignUp',
 }
 
 export const routes = (
   <Routes>
     <Route path={paths._} element={<ProtectedRoute component={GetApiKey} />} />
+
     <Route
       path={paths.getApiKey}
       element={<ProtectedRoute component={GetApiKey} />}
     />
-    <Route
-      path={paths.content}
-      element={<ProtectedRoute component={Content} />}
-    />
-    <Route
-      path={paths.newContent}
-      element={<ProtectedRoute component={NewContent} />}
-    />
+
+    <Route path={paths.content}>
+      <Route index element={<ProtectedRoute component={Content} />} />
+      <Route
+        path=":contentId"
+        element={<ProtectedRoute component={NewContent} />}
+      />
+    </Route>
+
     <Route
       path={paths.loginSignUp}
       element={<ProtectedRoute component={LoginSignUp} />}
