@@ -22,7 +22,7 @@ export const useContentTextDelete = () => {
       const res = client8Base.request(mutation, {
         force: true,
         data: {
-          id: payload,
+          id: payload.id,
         },
       })
 

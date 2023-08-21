@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Divider, Typography } from '@mui/joy'
 import { LiaPlusSolid, LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
@@ -16,66 +17,56 @@ export function Contents() {
   const contentCreate = useContentCreate()
   const contentDelete = useContentDelete()
   const contentsList = useContents()
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   return (
-    <motion.div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
+    <Stack
+      width={'75%'}
+      maxWidth={'800px'}
+      alignItems={'flex-start'}
+      p={3}
+      spacing={3}
+      sx={{
+        ...neumorph,
       }}
     >
-      <Stack
-        width={'800px'}
-        alignItems={'flex-start'}
-        p={3}
-        spacing={3}
-        sx={{
-          ...neumorph,
-        }}
-      >
-        <Stack
-          width={'100%'}
-          direction={'row'}
-          justifyContent={'space-between'}
-        >
-          <Typography textColor={'white'} level="h2">
-            Content
-          </Typography>
-          <Divider />
-
-          <Button
-            loading={contentCreate.isLoading}
-            onClick={() => contentCreate.mutate()}
-            endDecorator={<LiaPlusSolid />}
-          >
-            New
-          </Button>
-        </Stack>
+      <Stack width={'100%'} direction={'row'} justifyContent={'space-between'}>
+        <Typography textColor={'white'} level="h2">
+          Content
+        </Typography>
         <Divider />
 
-        {contentsList.isLoading ? (
-          <Typography level="h3">Loading...</Typography>
-        ) : (
-          contentsList.data.map((item: any) => (
-            <Stack direction={'row'} spacing={2} key={`${item.id}-contents`}>
-              <Button onClick={() => navigate(item.id)}>{item.title}</Button>
-
-              <IconButton
-                size="sm"
-                onClick={() => contentDelete.mutate(item.id)}
-              >
-                {contentDelete.isLoading ? (
-                  <LiaSpinnerSolid />
-                ) : (
-                  <LiaTrashSolid />
-                )}
-              </IconButton>
-            </Stack>
-          ))
-        )}
+        <Button
+          loading={contentCreate.isLoading}
+          onClick={() => contentCreate.mutate()}
+          endDecorator={<LiaPlusSolid />}
+        >
+          New
+        </Button>
       </Stack>
-    </motion.div>
+      <Divider />
+
+      {contentsList?.data?.map((item: any) => (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <Stack direction={'row'} spacing={2} key={`${item.id}-contents`}>
+            <Button onClick={() => navigate(item.id)}>
+              {!isMobile
+                ? item.title
+                : item.title.length > 25
+                ? `${item.title.substring(0, 25)}...`
+                : item.title}
+            </Button>
+
+            <IconButton size="sm" onClick={() => contentDelete.mutate(item.id)}>
+              {contentDelete.isLoading ? (
+                <LiaSpinnerSolid />
+              ) : (
+                <LiaTrashSolid />
+              )}
+            </IconButton>
+          </Stack>
+        </motion.div>
+      ))}
+    </Stack>
   )
 }

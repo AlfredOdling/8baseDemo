@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
-import { Stack, Grid, Typography, Textarea } from '@mui/joy'
+import { Stack, Grid, Typography, Textarea, Divider } from '@mui/joy'
 import {
-  LiaCheckSolid,
+  LiaMarkerSolid,
   LiaPenSolid,
   LiaSaveSolid,
   LiaSpinnerSolid,
@@ -27,95 +28,102 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const contentUpdate = useContentTextCreate()
 
   return (
-    <Grid xs={4}>
-      <Stack
-        alignItems={'flex-start'}
-        justifyContent={'space-between'}
-        height={'150px'}
-        p={1.5}
-        borderRadius={6}
-        sx={{
-          ...neumorph,
-        }}
-      >
-        {edit ? (
-          <Textarea
-            sx={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              color: 'white',
-            }}
-            maxRows={3}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-          />
-        ) : (
-          <Typography textColor={'white'}>{item.prompt}</Typography>
-        )}
+    <Grid xs={12} md={4}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <Stack
+          alignItems={'flex-start'}
+          justifyContent={'space-between'}
+          height={'150px'}
+          p={1.5}
+          borderRadius={6}
+          sx={{
+            ...neumorph,
+          }}
+        >
+          {edit ? (
+            <Textarea
+              sx={{
+                width: '100%',
+                backgroundColor: 'transparent',
+                color: 'white',
+              }}
+              maxRows={3}
+              value={input}
+              onChange={e => setInput(e.target.value)}
+            />
+          ) : (
+            <Typography textColor={'white'}>{item.prompt}</Typography>
+          )}
 
-        <Stack direction={'row'} spacing={1}>
-          <Button
-            key={item.id}
-            loading={contentUpdate.isLoading}
-            onClick={() =>
-              contentUpdate.mutate({
-                contentId: contentId,
-                type: selectValue,
-                url: urlValue,
-                text: textValue,
-                prompt: item.prompt,
-              })
-            }
-          >
-            Generate
-          </Button>
+          <Stack direction={'row'} spacing={1}>
+            <Button
+              key={item.id}
+              loading={contentUpdate.isLoading}
+              onClick={() =>
+                contentUpdate.mutate({
+                  contentId: contentId,
+                  type: selectValue,
+                  url: urlValue,
+                  text: textValue,
+                  prompt: item.prompt,
+                })
+              }
+              endDecorator={<LiaMarkerSolid />}
+            >
+              Generate
+            </Button>
 
-          <IconButton variant="solid" size="sm" onClick={() => setEdit(!edit)}>
-            <LiaPenSolid />
-          </IconButton>
+            <IconButton
+              variant="solid"
+              size="sm"
+              onClick={() => setEdit(!edit)}
+            >
+              <LiaPenSolid />
+            </IconButton>
 
-          <IconButton
-            variant="solid"
-            size="sm"
-            onClick={() =>
-              promptDelete.mutate({
-                id: item.id,
-              })
-            }
-          >
-            {promptDelete.isLoading ? <LiaSpinnerSolid /> : <LiaTrashSolid />}
-          </IconButton>
-
-          {edit && (
             <IconButton
               variant="solid"
               size="sm"
               onClick={() =>
-                promptUpdate
-                  .mutateAsync({
-                    id: item.id,
-                    prompt: input,
-                    user: {
-                      connect: {
-                        email: 'alfredodling@gmail.com',
-                      },
-                    },
-                  })
-                  .then(() => {
-                    setEdit(false)
-                    promptUpdate.reset()
-                  })
+                promptDelete.mutate({
+                  id: item.id,
+                })
               }
             >
-              {promptUpdate.isLoading ? (
-                <LiaSpinnerSolid />
-              ) : (
-                <LiaSaveSolid color="yellow" />
-              )}
+              {promptDelete.isLoading ? <LiaSpinnerSolid /> : <LiaTrashSolid />}
             </IconButton>
-          )}
+
+            {edit && (
+              <IconButton
+                variant="solid"
+                size="sm"
+                onClick={() =>
+                  promptUpdate
+                    .mutateAsync({
+                      id: item.id,
+                      prompt: input,
+                      user: {
+                        connect: {
+                          email: 'alfredodling@gmail.com',
+                        },
+                      },
+                    })
+                    .then(() => {
+                      setEdit(false)
+                      promptUpdate.reset()
+                    })
+                }
+              >
+                {promptUpdate.isLoading ? (
+                  <LiaSpinnerSolid />
+                ) : (
+                  <LiaSaveSolid color="yellow" />
+                )}
+              </IconButton>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
+      </motion.div>
     </Grid>
   )
 }

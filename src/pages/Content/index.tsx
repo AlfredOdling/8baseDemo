@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 import { LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
@@ -10,11 +11,12 @@ import {
   Textarea,
   Typography,
   Grid,
+  Divider,
 } from '@mui/joy'
+import { useMediaQuery } from 'react-responsive'
 
 import { Prompts } from './components/Prompts'
 import { useContentTextDelete } from '../../api/useContent/contentTextDelete'
-import { useParams } from 'react-router-dom'
 import { useContent } from '../../api/useContent/content'
 import { neumorph } from '../../shared/styles'
 import { IconButton } from '../../shared/components/IconButton'
@@ -22,26 +24,23 @@ import { IconButton } from '../../shared/components/IconButton'
 export function Content() {
   const [selectValue, setSelectValue] = useState<string | null>('website')
   const [textValue, setTextValue] = useState('')
-  const [urlValue, setUrlValue] = useState(
-    'https://docs.8base.com/projects/frontend/getting-started-introduction'
-  )
+  const [urlValue, setUrlValue] = useState('')
 
   const { contentId } = useParams()
   const content = useContent(contentId!)
   const contentTextDelete = useContentTextDelete()
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
 
   return (
     <Stack
-      width={'800px'}
-      margin={'0 auto'}
-      mt={3}
+      width={'75%'}
+      maxWidth={'800px'}
       alignItems={'flex-start'}
-      borderRadius={6}
+      p={3}
+      spacing={3}
       sx={{
-        p: 3,
         ...neumorph,
       }}
-      spacing={3}
     >
       <Typography textColor={'white'} level="h4">
         Subject: {content.data?.title || 'Untitled'}
@@ -76,6 +75,7 @@ export function Content() {
             fullWidth
             value={urlValue}
             onChange={e => setUrlValue(e.target.value)}
+            placeholder="Add your URL here"
           />
         )}
 
@@ -84,91 +84,106 @@ export function Content() {
           onChange={(_, val) => setSelectValue(val)}
           sx={{
             ...neumorph,
-            width: '150px',
+            width: isMobile ? '200px' : '140px',
             color: 'white',
             border: 'none',
             '&:hover': {
               backgroundColor: 'transparent',
             },
+            '& .MuiSelect-indicator': {
+              '--Icon-color': 'white',
+            },
           }}
         >
           <Option value="website">Website</Option>
           <Option value="youtube">YouTube</Option>
-          <Option value="text">Text</Option>
+          {/* <Option value="text">Text</Option> */}
         </Select>
       </Stack>
+      {textValue ||
+        (urlValue && (
+          <>
+            <Prompts
+              selectValue={selectValue}
+              urlValue={urlValue}
+              textValue={textValue}
+            />
 
-      <Prompts
-        selectValue={selectValue}
-        urlValue={urlValue}
-        textValue={textValue}
-      />
+            <Typography textColor={'white'} level="h4">
+              Content
+            </Typography>
 
-      <Typography textColor={'white'} level="h4">
-        Content
-      </Typography>
+            {content.data?.isLoading ? (
+              <Typography level="h3">Loading...</Typography>
+            ) : (
+              <Grid container width={'100%'} spacing={2} sx={{ flexGrow: 1 }}>
+                {content.data?.contentText?.items?.map((item: any) => (
+                  <Grid xs={12} md={6} key={`${item.id}-content`}>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <Stack
+                        key={`${item.id}-content`}
+                        height={'200px'}
+                        p={1.5}
+                        alignItems={'flex-start'}
+                        justifyContent={'space-between'}
+                        sx={{
+                          ...neumorph,
+                        }}
+                      >
+                        <Stack spacing={2}>
+                          <Typography
+                            textColor={'white'}
+                            fontWeight={'bold'}
+                            sx={{
+                              overflow: 'hidden',
+                              display: '-webkit-box',
+                              WebkitLineClamp: '1',
+                              WebkitBoxOrient: 'vertical',
+                            }}
+                          >
+                            Prompt: {item.prompt}
+                          </Typography>
+                          <Divider />
 
-      {content.data?.isLoading ? (
-        <Typography level="h3">Loading...</Typography>
-      ) : (
-        <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-          {content.data?.contentText?.items?.map((item: any) => (
-            <Grid xs={6} key={`${item.id}-content`}>
-              <Stack
-                spacing={2}
-                key={`${item.id}-content`}
-                height={'200px'}
-                p={1.5}
-                alignItems={'flex-start'}
-                justifyContent={'space-between'}
-                sx={{
-                  ...neumorph,
-                }}
-              >
-                <Typography
-                  textColor={'white'}
-                  sx={{
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: '4',
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  Prompt: {item.prompt}
-                </Typography>
+                          <Typography
+                            textColor={'white'}
+                            sx={{
+                              overflow: 'hidden',
+                              display: '-webkit-box',
+                              WebkitLineClamp: '3',
+                              WebkitBoxOrient: 'vertical',
+                            }}
+                          >
+                            {item.text}
+                          </Typography>
+                        </Stack>
 
-                <Typography
-                  textColor={'white'}
-                  sx={{
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: '4',
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  {item.text}
-                </Typography>
-
-                <IconButton
-                  variant="solid"
-                  size="sm"
-                  onClick={() =>
-                    contentTextDelete.mutate({
-                      id: item.id,
-                    })
-                  }
-                >
-                  {contentTextDelete.isLoading ? (
-                    <LiaSpinnerSolid />
-                  ) : (
-                    <LiaTrashSolid />
-                  )}
-                </IconButton>
-              </Stack>
-            </Grid>
-          ))}
-        </Grid>
-      )}
+                        <IconButton
+                          variant="solid"
+                          size="sm"
+                          onClick={() =>
+                            contentTextDelete.mutate({
+                              id: item.id,
+                            })
+                          }
+                        >
+                          {contentTextDelete.isLoading ? (
+                            <LiaSpinnerSolid />
+                          ) : (
+                            <LiaTrashSolid />
+                          )}
+                        </IconButton>
+                      </Stack>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </>
+        ))}
     </Stack>
   )
 }

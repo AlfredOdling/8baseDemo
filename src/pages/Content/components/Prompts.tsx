@@ -34,7 +34,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
         </IconButton>
       </Stack>
 
-      <Grid container spacing={2} sx={{ flexGrow: 1 }}>
+      <Grid container width={'100%'} spacing={2} sx={{ flexGrow: 1 }}>
         {promptsList.data?.map((item: any) => (
           <Prompt
             key={`${item.id}-promt`}
