@@ -17,11 +17,13 @@ import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
 import { neumorph } from '../../../shared/styles'
 import { Button } from '../../../shared/components/Button'
 import { IconButton } from '../../../shared/components/IconButton'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const [edit, setEdit] = useState(false)
   const [input, setInput] = useState(item.prompt)
   const { contentId } = useParams()
+  const { user } = useAuth0()
 
   const promptDelete = usePromptDelete()
   const promptUpdate = usePromptUpdate()
@@ -104,7 +106,7 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                       prompt: input,
                       user: {
                         connect: {
-                          email: 'alfredodling@gmail.com',
+                          email: user?.email,
                         },
                       },
                     })

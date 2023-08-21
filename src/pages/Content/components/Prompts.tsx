@@ -5,10 +5,12 @@ import { Prompt } from './Prompt'
 import { usePromptCreate } from '../../../api/usePrompts/promptCreate'
 import { usePromptsList } from '../../../api/usePrompts/promptList'
 import { IconButton } from '../../../shared/components/IconButton'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const promptCreate = usePromptCreate()
   const promptsList = usePromptsList()
+  const { user } = useAuth0()
 
   return (
     <>
@@ -24,7 +26,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
             promptCreate.mutate({
               user: {
                 connect: {
-                  email: 'alfredodling@gmail.com',
+                  email: user?.email,
                 },
               },
             })

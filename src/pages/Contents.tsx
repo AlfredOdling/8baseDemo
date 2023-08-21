@@ -47,8 +47,12 @@ export function Contents() {
       <Divider />
 
       {contentsList?.data?.map((item: any) => (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Stack direction={'row'} spacing={2} key={`${item.id}-contents`}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          key={`${item.id}-contents`}
+        >
+          <Stack direction={'row'} spacing={2}>
             <Button onClick={() => navigate(item.id)}>
               {!isMobile
                 ? item.title

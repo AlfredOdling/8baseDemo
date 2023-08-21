@@ -2,9 +2,11 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const useContentCreate = () => {
   const navigate = useNavigate()
+  const { user } = useAuth0()
 
   return useMutation({
     mutationKey: ['content'],
@@ -22,7 +24,7 @@ export const useContentCreate = () => {
         data: {
           user: {
             connect: {
-              email: 'alfredodling@gmail.com',
+              email: user?.email,
             },
           },
         },

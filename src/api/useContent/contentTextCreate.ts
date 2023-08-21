@@ -4,9 +4,12 @@ import axios from 'axios'
 
 import { client8Base } from '../client'
 import { queryClient } from '../..'
+import { useAuth0 } from '@auth0/auth0-react'
 
-export const useContentTextCreate = () =>
-  useMutation({
+export const useContentTextCreate = () => {
+  const { user } = useAuth0()
+
+  return useMutation({
     mutationKey: ['content'],
 
     mutationFn: (payload: any) => {
@@ -35,7 +38,7 @@ export const useContentTextCreate = () =>
             title: data.data.title.output_text,
             user: {
               connect: {
-                email: 'alfredodling@gmail.com',
+                email: user?.email,
               },
             },
             contentText: {
@@ -51,3 +54,4 @@ export const useContentTextCreate = () =>
         })
     },
   })
+}

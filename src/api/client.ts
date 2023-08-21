@@ -1,4 +1,4 @@
-import { gql, GraphQLClient } from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 
 export const client8Base = new GraphQLClient(
   'https://uk.api.8base.com/cl1bujdae06nb09mhasqg4we4',

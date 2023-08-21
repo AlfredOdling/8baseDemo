@@ -14,7 +14,6 @@ export const App = () => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
-          marginTop: '40px',
           marginBottom: '40px',
         }}
       >
