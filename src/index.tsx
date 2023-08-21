@@ -8,7 +8,6 @@ import reportWebVitals from './reportWebVitals'
 import { Auth0ProviderWithRedirectCallback } from './shared/auth'
 import { App } from './App'
 import './index.css'
-
 import '@fontsource/inter'
 
 export const queryClient = new QueryClient()
@@ -26,7 +25,6 @@ root.render(
       >
         <QueryClientProvider client={queryClient}>
           <App />
-
           <ReactQueryDevtools initialIsOpen />
         </QueryClientProvider>
       </Auth0ProviderWithRedirectCallback>

@@ -1,15 +1,15 @@
-import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
 import { motion } from 'framer-motion'
 import { Divider, Typography } from '@mui/joy'
-import { LiaPlusSolid } from 'react-icons/lia'
+import { LiaPlusSolid, LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
 
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
 import { useContentDelete } from '../api/useContent/contentDelete'
-
-const gradientBackground2 = 'linear-gradient(45deg, #FE2443 30%, #FF8E53 90%)'
+import { Button } from '../shared/components/Button'
+import { neumorph } from '../shared/styles'
+import { IconButton } from '../shared/components/IconButton'
 
 export function Contents() {
   const navigate = useNavigate()
@@ -19,8 +19,6 @@ export function Contents() {
 
   return (
     <motion.div
-      initial={{ background: gradientBackground2 }}
-      animate={{ background: '#FCFCFC' }}
       style={{
         display: 'flex',
         justifyContent: 'center',
@@ -31,21 +29,20 @@ export function Contents() {
       <Stack
         width={'800px'}
         alignItems={'flex-start'}
-        borderRadius={6}
-        sx={{
-          p: 3,
-          background: 'white',
-          boxShadow:
-            'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px',
-        }}
+        p={3}
         spacing={3}
+        sx={{
+          ...neumorph,
+        }}
       >
         <Stack
           width={'100%'}
           direction={'row'}
           justifyContent={'space-between'}
         >
-          <Typography level="h2">Content creation</Typography>
+          <Typography textColor={'white'} level="h2">
+            Content
+          </Typography>
           <Divider />
 
           <Button
@@ -62,18 +59,19 @@ export function Contents() {
           <Typography level="h3">Loading...</Typography>
         ) : (
           contentsList.data.map((item: any) => (
-            <Stack direction={'row'} spacing={2}>
-              <Button key={item.id} onClick={() => navigate(item.id)}>
-                {item.title}
-              </Button>
+            <Stack direction={'row'} spacing={2} key={`${item.id}-contents`}>
+              <Button onClick={() => navigate(item.id)}>{item.title}</Button>
 
-              <Button
-                key={item.id}
-                loading={contentDelete.isLoading}
+              <IconButton
+                size="sm"
                 onClick={() => contentDelete.mutate(item.id)}
               >
-                Delete
-              </Button>
+                {contentDelete.isLoading ? (
+                  <LiaSpinnerSolid />
+                ) : (
+                  <LiaTrashSolid />
+                )}
+              </IconButton>
             </Stack>
           ))
         )}

@@ -16,6 +16,7 @@ export const useContent = (contentId: string) =>
               items {
                 id
                 text
+                prompt
               }
             }
           }

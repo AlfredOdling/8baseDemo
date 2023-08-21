@@ -17,6 +17,7 @@ export const usePromptsList = () =>
           }
         }
       `
+
       const res = client8Base.request(query)
       return res
     },

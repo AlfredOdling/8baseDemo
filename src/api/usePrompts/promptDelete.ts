@@ -15,6 +15,7 @@ export const usePromptDelete = () =>
           }
         }
       `
+
       const res = client8Base.request(mutation, {
         data,
       })

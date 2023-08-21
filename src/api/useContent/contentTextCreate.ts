@@ -14,7 +14,6 @@ export const useContentTextCreate = () =>
         `https://web-production-4490c.up.railway.app/generateText/${payload.type}`,
         {
           url: payload.url,
-          text: payload.text,
           prompt: payload.prompt,
         }
       )
@@ -42,13 +41,12 @@ export const useContentTextCreate = () =>
             contentText: {
               create: {
                 text: data.data.content.output_text,
+                prompt: variables.prompt,
               },
             },
           },
         })
         .then(() => {
-          console.log('success')
-
           queryClient.invalidateQueries({ queryKey: ['content'] })
         })
     },

@@ -1,7 +1,7 @@
-import Button from '@mui/joy/Button'
 import Stack from '@mui/joy/Stack'
 import Card from '@mui/joy/Card'
 import { useAuth0 } from '@auth0/auth0-react'
+import { Button } from '../shared/components/Button'
 
 export function LoginSignUp() {
   const { loginWithRedirect, logout } = useAuth0()

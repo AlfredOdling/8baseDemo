@@ -29,7 +29,7 @@ export const useContentDelete = () => {
       return res
     },
 
-    onSuccess: (data: any, variables, ctx) => {
+    onSuccess: (data: any) => {
       navigate(data?.contentDelete.id)
       queryClient.invalidateQueries({ queryKey: ['contentsList'] })
     },

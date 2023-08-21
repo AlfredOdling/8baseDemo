@@ -15,6 +15,7 @@ export const usePromptCreate = () =>
           }
         }
       `
+
       const res = client8Base.request(mutation, {
         data,
       })

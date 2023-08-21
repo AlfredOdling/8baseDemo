@@ -15,6 +15,7 @@ export const usePromptUpdate = () =>
           }
         }
       `
+
       const res = client8Base.request(mutation, {
         data,
       })

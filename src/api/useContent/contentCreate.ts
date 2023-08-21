@@ -27,11 +27,10 @@ export const useContentCreate = () => {
           },
         },
       })
-
       return res
     },
 
-    onSuccess: (data: any, variables, ctx) => {
+    onSuccess: (data: any) => {
       navigate(data?.contentCreate.id)
     },
   })
