@@ -4,7 +4,7 @@ import { client8Base } from '../client'
 
 export const useContent = (contentId: string) =>
   useQuery({
-    queryKey: ['content'],
+    queryKey: ['content', contentId],
 
     queryFn: async () => {
       const query = gql`

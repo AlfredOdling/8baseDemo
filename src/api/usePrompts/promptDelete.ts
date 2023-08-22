@@ -5,7 +5,7 @@ import { queryClient } from '../..'
 
 export const usePromptDelete = () =>
   useMutation({
-    mutationKey: ['prompts'],
+    mutationKey: ['prompt'],
 
     mutationFn: async (data: any) => {
       const mutation = gql`
@@ -24,6 +24,6 @@ export const usePromptDelete = () =>
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['prompts'] })
+      queryClient.invalidateQueries({ queryKey: ['prompt'] })
     },
   })

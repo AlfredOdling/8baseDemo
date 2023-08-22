@@ -31,7 +31,9 @@ export const useContentTextDelete = () => {
 
     onSuccess: (data: any, variables, ctx) => {
       navigate(data?.contentTextDelete.id)
-      queryClient.invalidateQueries({ queryKey: ['content'] })
+      queryClient.invalidateQueries({
+        queryKey: ['content', variables.contentId],
+      })
     },
   })
 }

@@ -12,6 +12,10 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const promptsList = usePromptsList()
   const { user } = useAuth0()
 
+  if (promptsList.isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
       <Stack width={'100%'} direction={'row'} spacing={2}>

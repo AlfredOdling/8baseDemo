@@ -1,22 +1,22 @@
 import { Button as ButtonMUI, ButtonProps } from '@mui/joy'
-import { neumorph } from '../styles'
+import { neumorphButton } from '../styles'
 
 export const Button = (props: ButtonProps) => (
   <ButtonMUI
+    {...props}
     sx={{
-      ...neumorph,
-      cursor: 'pointer',
-      transition: '0.1s',
-
+      ...neumorphButton,
       '&:hover': {
         transform: 'scale(0.97)',
+        backgroundPosition: '100% 0',
+        transition: 'all .35s ease-in-out',
       },
       '&:active': {
         transform: 'scale(0.93)',
       },
-
-      ...props.sx,
+      '&.MuiButton-loading': {
+        background: 'transparent ',
+      },
     }}
-    {...props}
   />
 )

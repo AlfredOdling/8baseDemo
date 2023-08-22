@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { LiaLockSolid, LiaSpinnerSolid, LiaUnlockSolid } from 'react-icons/lia'
 import { Stack, Input, Option, Select, Textarea, Typography } from '@mui/joy'
@@ -10,6 +10,7 @@ import { neumorph } from '../../shared/styles'
 import { IconButton } from '../../shared/components/IconButton'
 import { useContentUpdate } from '../../api/useContent/contentUpdate'
 import { Content } from './components/Content'
+import { usePromptsList } from '../../api/usePrompts/promptList'
 
 export function ContentPage() {
   const [selectValue, setSelectValue] = useState<string | null>('website')
@@ -19,8 +20,18 @@ export function ContentPage() {
   const contentUpdate = useContentUpdate()
   const content = useContent(contentId!)
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
-  const [lock, setLock] = useState(!!content.data?.url)
-  const [urlValue, setUrlValue] = useState(content.data?.url || '')
+  const [lock, setLock] = useState(false)
+  const [urlValue, setUrlValue] = useState('')
+  const promptsList = usePromptsList()
+
+  useEffect(() => {
+    setLock(!!content.data?.url)
+    setUrlValue(content.data?.url || '')
+  }, [content.data?.url])
+
+  if (promptsList.isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <Stack
@@ -64,7 +75,7 @@ export function ContentPage() {
                 'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
             }}
             fullWidth
-            value={content.data?.url || ''}
+            value={urlValue}
             onChange={e => setUrlValue(e.target.value)}
             placeholder="Add your URL here"
             disabled={lock}
@@ -104,26 +115,7 @@ export function ContentPage() {
                 setLock(!lock)
               })
           }
-          sx={
-            !lock && (textValue || urlValue)
-              ? {
-                  ...neumorph,
-                  border: '2px #156F85 solid',
-                  animation: 'pulse 2s infinite',
-                  '@-webkit-keyframes pulse': {
-                    '0%': {
-                      WebkitBoxShadow: '0 0 0 0 rgba(16, 197, 242, 0.4)',
-                    },
-                    '70%': {
-                      WebkitBoxShadow: '0 0 0 10px rgba(16, 197, 242, 0)',
-                    },
-                    '100%': {
-                      WebkitBoxShadow: '0 0 0 0 rgba(16, 197, 242, 0)',
-                    },
-                  },
-                }
-              : { ...neumorph }
-          }
+          pulsate={!lock && (!!textValue || !!urlValue)}
         >
           {lock ? (
             <LiaLockSolid />

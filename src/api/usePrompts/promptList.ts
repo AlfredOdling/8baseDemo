@@ -4,7 +4,7 @@ import { client8Base } from '../client'
 
 export const usePromptsList = () =>
   useQuery({
-    queryKey: ['prompts'],
+    queryKey: ['prompt'],
 
     queryFn: async () => {
       const query = gql`

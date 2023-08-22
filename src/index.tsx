@@ -1,34 +1,54 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import reportWebVitals from './reportWebVitals'
-import { Auth0ProviderWithRedirectCallback } from './shared/auth'
-import { App } from './App'
 import './index.css'
 import '@fontsource/inter'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MainLayout } from './shared/components/Layout'
+import { ProtectedRoute } from './shared/auth'
+import { ContentsPage } from './pages/Contents'
+import { ContentPage } from './pages/Content'
+import { LoginSignUpPage } from './pages/LoginSignUp'
 
-export const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+export const queryClient = new QueryClient()
+export type QueryClientType = typeof queryClient
+
+export const paths = {
+  contents: '/contents',
+  loginSignUp: '/loginSignUp',
+}
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <ProtectedRoute component={ContentsPage} />,
+      },
+      {
+        path: ':contentId',
+        element: <ProtectedRoute component={ContentPage} />,
+      },
+      {
+        path: paths.loginSignUp,
+        element: <LoginSignUpPage />,
+      },
+    ],
+  },
+])
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Auth0ProviderWithRedirectCallback
-        domain="dev-nhdp1bejfg718y3u.eu.auth0.com"
-        clientId="wXTGak6ZbDqUTnJuxwTKOkSQ3jAzUutP"
-        authorizationParams={{
-          redirect_uri: window.location.origin,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <App />
-          <ReactQueryDevtools initialIsOpen />
-        </QueryClientProvider>
-      </Auth0ProviderWithRedirectCallback>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen />
+    </QueryClientProvider>
   </React.StrictMode>
 )
 

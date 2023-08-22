@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-import { Stack, Grid, Typography, Textarea, Divider } from '@mui/joy'
+import { Stack, Grid, Typography, Textarea } from '@mui/joy'
 import {
   LiaMarkerSolid,
   LiaPenSolid,
@@ -99,6 +99,7 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
               <IconButton
                 variant="solid"
                 size="sm"
+                pulsate
                 onClick={() =>
                   promptUpdate
                     .mutateAsync({
@@ -119,7 +120,7 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                 {promptUpdate.isLoading ? (
                   <LiaSpinnerSolid />
                 ) : (
-                  <LiaSaveSolid color="yellow" />
+                  <LiaSaveSolid />
                 )}
               </IconButton>
             )}

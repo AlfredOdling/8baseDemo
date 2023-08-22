@@ -61,7 +61,11 @@ export function ContentsPage() {
                 : item.title}
             </Button>
 
-            <IconButton size="sm" onClick={() => contentDelete.mutate(item.id)}>
+            <IconButton
+              variant="solid"
+              size="sm"
+              onClick={() => contentDelete.mutate(item.id)}
+            >
               {contentDelete.isLoading ? (
                 <LiaSpinnerSolid />
               ) : (

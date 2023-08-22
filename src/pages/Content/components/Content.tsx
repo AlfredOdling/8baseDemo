@@ -9,6 +9,10 @@ import { IconButton } from '../../../shared/components/IconButton'
 export const Content = ({ content }: any) => {
   const contentTextDelete = useContentTextDelete()
 
+  if (content.isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
       <Typography textColor={'white'} level="h4">

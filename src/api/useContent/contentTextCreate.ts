@@ -51,7 +51,9 @@ export const useContentTextCreate = () => {
           },
         })
         .then(() => {
-          queryClient.invalidateQueries({ queryKey: ['content'] })
+          queryClient.invalidateQueries({
+            queryKey: ['content', variables.contentId],
+          })
         })
     },
   })
