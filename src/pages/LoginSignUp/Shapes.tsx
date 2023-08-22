@@ -177,6 +177,7 @@ function Camera({ mouseX, mouseY, ...props }: any) {
 
   useLayoutEffect(() => {
     return cameraX.onChange(() => camera.lookAt(scene.position))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cameraX])
 
   return (
