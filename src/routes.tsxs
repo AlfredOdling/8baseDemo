@@ -1,7 +1,0 @@
-import { createBrowserRouter } from 'react-router-dom'
-
-import { ContentPage, contentLoader } from './pages/Content'
-import { ContentsPage } from './pages/Contents'
-import { LoginSignUpPage } from './pages/LoginSignUp'
-import { ProtectedRoute } from './shared/auth'
-import { MainLayout } from './shared/components/Layout'

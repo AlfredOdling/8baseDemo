@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Auth0ProviderWithRedirectCallback } from '../auth'
 import { Header } from './Header'
 
-export const MainLayout = () => {
+export const ProtectedLayout = () => {
   return (
     <Auth0ProviderWithRedirectCallback
       domain="dev-nhdp1bejfg718y3u.eu.auth0.com"

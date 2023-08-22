@@ -2,16 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 import '@fontsource/inter'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MainLayout } from './shared/components/Layout'
 import { ProtectedRoute } from './shared/auth'
 import { ContentsPage } from './pages/Contents'
 import { ContentPage } from './pages/Content'
 import { LoginSignUpPage } from './pages/LoginSignUp'
+import { OpenLayout } from './shared/components/OpenLayout'
+import { ProtectedLayout } from './shared/components/ProtectedLayout'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 export const queryClient = new QueryClient()
@@ -25,7 +26,7 @@ export const paths = {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: <ProtectedLayout />,
     children: [
       {
         index: true,
@@ -35,8 +36,14 @@ export const router = createBrowserRouter([
         path: ':contentId',
         element: <ProtectedRoute component={ContentPage} />,
       },
+    ],
+  },
+  {
+    path: paths.loginSignUp,
+    element: <OpenLayout />,
+    children: [
       {
-        path: paths.loginSignUp,
+        index: true,
         element: <LoginSignUpPage />,
       },
     ],
