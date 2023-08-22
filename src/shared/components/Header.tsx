@@ -34,7 +34,10 @@ export const Header = () => {
         onClick={() =>
           logout({
             logoutParams: {
-              returnTo: 'http://localhost:3000/loginSignUp',
+              returnTo:
+                process.env.NODE_ENV === 'production'
+                  ? 'https://main--delicate-eclair-57fb94.netlify.app//loginSignUp'
+                  : 'http://localhost:3000/loginSignUp',
             },
           })
         }
