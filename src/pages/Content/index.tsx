@@ -30,7 +30,7 @@ export function ContentPage() {
   }, [content.data?.url])
 
   if (promptsList.isLoading) {
-    return <div>Loading...</div>
+    return <LiaSpinnerSolid color="white" />
   }
 
   return (

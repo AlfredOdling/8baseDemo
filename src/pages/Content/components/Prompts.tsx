@@ -13,7 +13,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const { user } = useAuth0()
 
   if (promptsList.isLoading) {
-    return <div>Loading...</div>
+    return <LiaSpinnerSolid color="white" />
   }
 
   return (

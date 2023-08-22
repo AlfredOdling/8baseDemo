@@ -36,7 +36,7 @@ export const Content = ({ content }: any) => {
   }
 
   if (content.isLoading) {
-    return <div>Loading...</div>
+    return <LiaSpinnerSolid color="white" />
   }
 
   return (
