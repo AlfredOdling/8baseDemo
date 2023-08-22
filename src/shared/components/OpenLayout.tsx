@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { Auth0ProviderWithRedirectCallback } from '../auth'
-import { Header } from './Header'
 
 export const OpenLayout = () => {
   return (
@@ -25,8 +24,6 @@ export const OpenLayout = () => {
             marginBottom: '40px',
           }}
         >
-          <Header />
-
           <Outlet />
         </motion.div>
       </AnimatePresence>
