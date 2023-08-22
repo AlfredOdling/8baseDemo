@@ -36,7 +36,7 @@ export const Header = () => {
             logoutParams: {
               returnTo:
                 process.env.NODE_ENV === 'production'
-                  ? 'https://main--delicate-eclair-57fb94.netlify.app//loginSignUp'
+                  ? 'https://main--delicate-eclair-57fb94.netlify.app/loginSignUp'
                   : 'http://localhost:3000/loginSignUp',
             },
           })
