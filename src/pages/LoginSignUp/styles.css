@@ -143,9 +143,10 @@ html {
 }
 
 .bodyish {
-  min-height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
+  margin-top: -40px;
 }
 
 /* devanagari */
