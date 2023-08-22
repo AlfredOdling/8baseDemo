@@ -12,6 +12,7 @@ export const useContent = (contentId: string) =>
           content(id: $id) {
             id
             title
+            url
             contentText {
               items {
                 id

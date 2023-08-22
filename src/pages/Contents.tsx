@@ -12,7 +12,7 @@ import { Button } from '../shared/components/Button'
 import { neumorph } from '../shared/styles'
 import { IconButton } from '../shared/components/IconButton'
 
-export function Contents() {
+export function ContentsPage() {
   const navigate = useNavigate()
   const contentCreate = useContentCreate()
   const contentDelete = useContentDelete()

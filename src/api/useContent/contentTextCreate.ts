@@ -35,12 +35,13 @@ export const useContentTextCreate = () => {
         .request(mutation, {
           data: {
             id: variables.contentId,
-            title: data.data.title.output_text,
             user: {
               connect: {
                 email: user?.email,
               },
             },
+            title: data.data.title.output_text,
+            url: data.data.url,
             contentText: {
               create: {
                 text: data.data.content.output_text,

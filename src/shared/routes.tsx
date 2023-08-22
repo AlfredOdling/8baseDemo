@@ -2,9 +2,9 @@ import { Routes, Route, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
 import { ProtectedRoute } from './auth'
-import { Contents } from '../pages/Contents'
-import { Content } from '../pages/Content'
-import { LoginSignUp } from '../pages/LoginSignUp'
+import { ContentsPage } from '../pages/Contents'
+import { ContentPage } from '../pages/Content'
+import { LoginSignUpPage } from '../pages/LoginSignUp'
 import { Avatar, Dropdown, Menu, MenuButton, MenuItem, Stack } from '@mui/joy'
 import { neumorph } from './styles'
 import { Button } from './components/Button'
@@ -89,13 +89,13 @@ function Layout(props: any) {
 export const routes = (
   <Routes>
     <Route path="/" element={<Layout />}>
-      <Route index element={<ProtectedRoute component={Contents} />} />
+      <Route index element={<ProtectedRoute component={ContentsPage} />} />
       <Route
         path=":contentId"
-        element={<ProtectedRoute component={Content} />}
+        element={<ProtectedRoute component={ContentPage} />}
       />
     </Route>
 
-    <Route path={paths.loginSignUp} element={<LoginSignUp />} />
+    <Route path={paths.loginSignUp} element={<LoginSignUpPage />} />
   </Routes>
 )

@@ -15,7 +15,6 @@ export const IconButton = (props: IconButtonProps) => (
       '&:active': {
         transform: 'scale(0.91)',
       },
-
       ...props.sx,
     }}
     {...props}

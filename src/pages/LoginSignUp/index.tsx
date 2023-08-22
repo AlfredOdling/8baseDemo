@@ -7,7 +7,7 @@ import { Shapes } from './Shapes'
 import { transition } from './settings'
 import './styles.css'
 
-export function LoginSignUp() {
+export function LoginSignUpPage() {
   const { loginWithRedirect } = useAuth0()
 
   const [ref, bounds] = useMeasure({ scroll: false })

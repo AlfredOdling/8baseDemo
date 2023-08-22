@@ -30,7 +30,7 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const contentUpdate = useContentTextCreate()
 
   return (
-    <Grid xs={12} md={4}>
+    <Grid xs={12} md={6}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Stack
           alignItems={'flex-start'}

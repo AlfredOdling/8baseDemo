@@ -1,35 +1,26 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
-
-import { LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
-import {
-  Stack,
-  Input,
-  Option,
-  Select,
-  Textarea,
-  Typography,
-  Grid,
-  Divider,
-} from '@mui/joy'
+import { LiaLockSolid, LiaSpinnerSolid, LiaUnlockSolid } from 'react-icons/lia'
+import { Stack, Input, Option, Select, Textarea, Typography } from '@mui/joy'
 import { useMediaQuery } from 'react-responsive'
 
 import { Prompts } from './components/Prompts'
-import { useContentTextDelete } from '../../api/useContent/contentTextDelete'
 import { useContent } from '../../api/useContent/content'
 import { neumorph } from '../../shared/styles'
 import { IconButton } from '../../shared/components/IconButton'
+import { useContentUpdate } from '../../api/useContent/contentUpdate'
+import { Content } from './components/Content'
 
-export function Content() {
+export function ContentPage() {
   const [selectValue, setSelectValue] = useState<string | null>('website')
   const [textValue, setTextValue] = useState('')
-  const [urlValue, setUrlValue] = useState('')
 
   const { contentId } = useParams()
+  const contentUpdate = useContentUpdate()
   const content = useContent(contentId!)
-  const contentTextDelete = useContentTextDelete()
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
+  const [lock, setLock] = useState(!!content.data?.url)
+  const [urlValue, setUrlValue] = useState(content.data?.url || '')
 
   return (
     <Stack
@@ -43,7 +34,7 @@ export function Content() {
       }}
     >
       <Typography textColor={'white'} level="h4">
-        Subject: {content.data?.title || 'Untitled'}
+        {content.data?.title || 'Untitled'}
       </Typography>
 
       <Stack
@@ -73,9 +64,10 @@ export function Content() {
                 'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
             }}
             fullWidth
-            value={urlValue}
+            value={content.data?.url || ''}
             onChange={e => setUrlValue(e.target.value)}
             placeholder="Add your URL here"
+            disabled={lock}
           />
         )}
 
@@ -99,9 +91,52 @@ export function Content() {
           <Option value="youtube">YouTube</Option>
           {/* <Option value="text">Text</Option> */}
         </Select>
+
+        <IconButton
+          variant="solid"
+          onClick={() =>
+            contentUpdate
+              .mutateAsync({
+                id: contentId,
+                url: textValue || urlValue,
+              })
+              .then(() => {
+                setLock(!lock)
+              })
+          }
+          sx={
+            !lock && (textValue || urlValue)
+              ? {
+                  ...neumorph,
+                  border: '2px #156F85 solid',
+                  animation: 'pulse 2s infinite',
+                  '@-webkit-keyframes pulse': {
+                    '0%': {
+                      WebkitBoxShadow: '0 0 0 0 rgba(16, 197, 242, 0.4)',
+                    },
+                    '70%': {
+                      WebkitBoxShadow: '0 0 0 10px rgba(16, 197, 242, 0)',
+                    },
+                    '100%': {
+                      WebkitBoxShadow: '0 0 0 0 rgba(16, 197, 242, 0)',
+                    },
+                  },
+                }
+              : { ...neumorph }
+          }
+        >
+          {lock ? (
+            <LiaLockSolid />
+          ) : contentUpdate.isLoading ? (
+            <LiaSpinnerSolid />
+          ) : (
+            <LiaUnlockSolid />
+          )}
+        </IconButton>
       </Stack>
+
       {textValue ||
-        (urlValue && (
+        (urlValue && lock && (
           <>
             <Prompts
               selectValue={selectValue}
@@ -109,79 +144,7 @@ export function Content() {
               textValue={textValue}
             />
 
-            <Typography textColor={'white'} level="h4">
-              Content
-            </Typography>
-
-            {content.data?.isLoading ? (
-              <Typography level="h3">Loading...</Typography>
-            ) : (
-              <Grid container width={'100%'} spacing={2} sx={{ flexGrow: 1 }}>
-                {content.data?.contentText?.items?.map((item: any) => (
-                  <Grid xs={12} md={6} key={`${item.id}-content`}>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      <Stack
-                        key={`${item.id}-content`}
-                        height={'200px'}
-                        p={1.5}
-                        alignItems={'flex-start'}
-                        justifyContent={'space-between'}
-                        sx={{
-                          ...neumorph,
-                        }}
-                      >
-                        <Stack spacing={2}>
-                          <Typography
-                            textColor={'white'}
-                            fontWeight={'bold'}
-                            sx={{
-                              overflow: 'hidden',
-                              display: '-webkit-box',
-                              WebkitLineClamp: '1',
-                              WebkitBoxOrient: 'vertical',
-                            }}
-                          >
-                            Prompt: {item.prompt}
-                          </Typography>
-                          <Divider />
-
-                          <Typography
-                            textColor={'white'}
-                            sx={{
-                              overflow: 'hidden',
-                              display: '-webkit-box',
-                              WebkitLineClamp: '3',
-                              WebkitBoxOrient: 'vertical',
-                            }}
-                          >
-                            {item.text}
-                          </Typography>
-                        </Stack>
-
-                        <IconButton
-                          variant="solid"
-                          size="sm"
-                          onClick={() =>
-                            contentTextDelete.mutate({
-                              id: item.id,
-                            })
-                          }
-                        >
-                          {contentTextDelete.isLoading ? (
-                            <LiaSpinnerSolid />
-                          ) : (
-                            <LiaTrashSolid />
-                          )}
-                        </IconButton>
-                      </Stack>
-                    </motion.div>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
+            <Content content={content} />
           </>
         ))}
     </Stack>
