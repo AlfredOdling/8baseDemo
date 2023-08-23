@@ -3,12 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { Auth0ProviderWithRedirectCallback } from '../auth'
 import { Header } from './Header'
+import { env } from '../env'
 
 export const ProtectedLayout = () => {
   return (
     <Auth0ProviderWithRedirectCallback
-      domain="dev-nhdp1bejfg718y3u.eu.auth0.com"
-      clientId="wXTGak6ZbDqUTnJuxwTKOkSQ3jAzUutP"
+      domain={env.AUTH0_DOMAIN}
+      clientId={env.AUTH0_CLIENT_ID}
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}

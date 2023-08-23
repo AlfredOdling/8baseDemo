@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import './index.css'
@@ -39,11 +39,15 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: paths.loginSignUp,
+    path: '/',
     element: <OpenLayout />,
     children: [
       {
         index: true,
+        element: <Navigate to={paths.loginSignUp} />,
+      },
+      {
+        path: paths.loginSignUp,
         element: <LoginSignUpPage />,
       },
     ],
