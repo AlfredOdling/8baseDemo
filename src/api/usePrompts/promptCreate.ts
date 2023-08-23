@@ -1,10 +1,14 @@
 import { useMutation } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
+import { useAuth0 } from '@auth0/auth0-react'
+
 import { client8Base } from '../client'
 import { queryClient } from '../..'
 
-export const usePromptCreate = () =>
-  useMutation({
+export const usePromptCreate = () => {
+  const { user } = useAuth0()
+
+  return useMutation({
     mutationKey: ['prompt'],
 
     mutationFn: async (data: any) => {
@@ -17,7 +21,14 @@ export const usePromptCreate = () =>
       `
 
       const res = client8Base.request(mutation, {
-        data,
+        data: {
+          ...data,
+          user: {
+            connect: {
+              email: user?.email,
+            },
+          },
+        },
       })
 
       return res
@@ -27,3 +38,4 @@ export const usePromptCreate = () =>
       queryClient.invalidateQueries({ queryKey: ['prompt'] })
     },
   })
+}

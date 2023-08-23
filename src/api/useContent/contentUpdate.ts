@@ -26,7 +26,6 @@ export const useContentUpdate = () => {
     },
 
     onSuccess: (_, variables) => {
-      console.log('Content updated!', variables)
       queryClient.invalidateQueries({
         queryKey: ['content', variables.contentId],
       })

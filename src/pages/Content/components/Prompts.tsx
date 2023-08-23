@@ -12,8 +12,8 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const promptsList = usePromptsList()
   const { user } = useAuth0()
 
-  const sortedUpdatedAt = promptsList?.data?.sort((a: any, b: any) => {
-    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+  const sortedcreatedAt = promptsList?.data?.sort((a: any, b: any) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
   console.log('🚀  promptsList?.data:', promptsList?.data)
 
@@ -59,7 +59,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
             'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
         }}
       >
-        {sortedUpdatedAt.map((item: any) => (
+        {sortedcreatedAt.map((item: any) => (
           <Prompt
             key={`${item.id}-promt`}
             item={item}

@@ -126,6 +126,7 @@
   pointer-events: none;
   color: #d0d0db;
   display: block;
+  margin-top: 40px;
 }
 
 html {
