@@ -24,7 +24,7 @@ export const useContentTextCreate = () => {
 
     onSuccess: (data, variables) => {
       const mutation = gql`
-        mutation ContentUpdate($data: ContentUpdateInput!) {
+        mutation ContentUpdateText($data: ContentUpdateInput!) {
           contentUpdate(data: $data) {
             id
           }

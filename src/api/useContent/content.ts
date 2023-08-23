@@ -16,6 +16,7 @@ export const useContent = (contentId: string) =>
             contentText {
               items {
                 id
+                updatedAt
                 text
                 prompt
               }

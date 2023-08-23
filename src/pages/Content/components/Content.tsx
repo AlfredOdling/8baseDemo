@@ -20,14 +20,17 @@ export const Content = ({ content }: any) => {
   const [open, setOpen] = useState(false)
   const [openSnack, setOpenSnack] = useState(false)
 
+  const sortedUpdatedAt = content.data?.contentText?.items.sort(
+    (a: any, b: any) => {
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    }
+  )
+
   const handleClick = () => {
     setOpenSnack(true)
   }
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (_: any, reason?: string) => {
     if (reason === 'clickaway') {
       return
     }
@@ -45,8 +48,21 @@ export const Content = ({ content }: any) => {
         Content
       </Typography>
 
-      <Grid container width={'100%'} spacing={2} sx={{ flexGrow: 1 }}>
-        {content.data?.contentText?.items?.map((item: any) => (
+      <Grid
+        container
+        width={'100%'}
+        spacing={2}
+        sx={{
+          flexGrow: 1,
+          padding: 1,
+          maxHeight: '600px',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          boxShadow:
+            'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
+        }}
+      >
+        {sortedUpdatedAt.map((item: any) => (
           <Grid xs={12} md={6} key={`${item.id}-content`}>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Stack

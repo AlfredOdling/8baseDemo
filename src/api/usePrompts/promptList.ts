@@ -11,6 +11,7 @@ export const usePromptsList = () =>
         query promptsList {
           promptsList {
             items {
+              updatedAt
               prompt
               id
             }

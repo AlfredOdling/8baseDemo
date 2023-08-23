@@ -12,6 +12,11 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const promptsList = usePromptsList()
   const { user } = useAuth0()
 
+  const sortedUpdatedAt = promptsList?.data?.sort((a: any, b: any) => {
+    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+  })
+  console.log('🚀  promptsList?.data:', promptsList?.data)
+
   if (promptsList.isLoading) {
     return <LiaSpinnerSolid color="white" />
   }
@@ -40,8 +45,21 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
         </IconButton>
       </Stack>
 
-      <Grid container width={'100%'} spacing={2} sx={{ flexGrow: 1 }}>
-        {promptsList.data?.map((item: any) => (
+      <Grid
+        container
+        width={'100%'}
+        spacing={2}
+        sx={{
+          flexGrow: 1,
+          padding: 1,
+          maxHeight: '400px',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          boxShadow:
+            'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
+        }}
+      >
+        {sortedUpdatedAt.map((item: any) => (
           <Prompt
             key={`${item.id}-promt`}
             item={item}
