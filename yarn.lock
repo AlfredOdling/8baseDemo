@@ -11869,7 +11869,7 @@ react-merge-refs@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-2.0.2.tgz#73f576111124897dec4ea56035a97e199e8cb377"
   integrity sha512-V5BGTwGa2r+/t0A/BZMS6L7VPXY0CU8xtAhkT3XUoI1WJJhhtvulvoiZkJ5Jt9YAW23m4xFWmhQ+C5HwjtTFhQ==
 
-react-query-kit@^1.4.6:
+react-query-kit@^1.4.8:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/react-query-kit/-/react-query-kit-1.4.8.tgz#73da2befb5a532833a3a93dc8f5ef480ba601b0d"
   integrity sha512-33As333DZWZUi3SvNEjTN9ex5ykiWU0mPGawsMWTm59tLI4tfeoldtsXK8UGaINguKYm4D7qq3P/ltd3ldyr8Q==

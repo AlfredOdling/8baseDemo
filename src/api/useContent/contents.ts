@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
 import { useAuth0 } from '@auth0/auth0-react'
+import { ContentListResponse_ } from '../schemaTypes'
 
 export const useContents = () => {
   const { user } = useAuth0()
@@ -34,6 +35,7 @@ export const useContents = () => {
       return res
     },
 
-    select: (data: any) => data?.contentsList?.items,
+    select: (data: any) =>
+      data?.contentsList?.items as ContentListResponse_['items'],
   })
 }

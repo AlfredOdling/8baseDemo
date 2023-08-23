@@ -58,7 +58,7 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
             'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
         }}
       >
-        {sortedcreatedAt.map((item: any) => (
+        {sortedcreatedAt?.map((item: any) => (
           <Prompt
             key={`${item.id}-promt`}
             item={item}

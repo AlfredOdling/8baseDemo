@@ -3,6 +3,7 @@ import { gql } from 'graphql-request'
 import { useAuth0 } from '@auth0/auth0-react'
 
 import { client8Base } from '../client'
+import { PromptListResponse_ } from '../schemaTypes'
 
 export const usePromptsList = () => {
   const { user } = useAuth0()
@@ -37,6 +38,7 @@ export const usePromptsList = () => {
       return res
     },
 
-    select: (data: any) => data?.promptsList?.items,
+    select: (data: any) =>
+      data?.promptsList?.items as PromptListResponse_['items'],
   })
 }

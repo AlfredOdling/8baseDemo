@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
+import { Content_ } from '../schemaTypes'
 
 export const useContent = (contentId: string) =>
   useQuery({
@@ -31,5 +32,5 @@ export const useContent = (contentId: string) =>
       return res
     },
 
-    select: (data: any) => data?.content,
+    select: (data: any) => data?.content as Content_,
   })

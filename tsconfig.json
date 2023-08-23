@@ -21,9 +21,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "src/api/schemaTypes.ts"
   ],
   "exclude": [
-    "src/api/types"
+    "src/api/schemaTypes.ts"
   ]
 }
