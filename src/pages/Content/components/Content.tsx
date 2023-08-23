@@ -18,6 +18,7 @@ import { Alert, Snackbar } from '@mui/material'
 export const Content = ({ content }: any) => {
   const contentTextDelete = useContentTextDelete()
   const [open, setOpen] = useState(false)
+  const [modalContent, setModalContent] = useState({})
   const [openSnack, setOpenSnack] = useState(false)
 
   const sortedUpdatedAt = content.data?.contentText?.items.sort(
@@ -25,6 +26,11 @@ export const Content = ({ content }: any) => {
       return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
     }
   )
+
+  const openModal = (item: any) => {
+    setOpen(true)
+    setModalContent(item)
+  }
 
   const handleClick = () => {
     setOpenSnack(true)
@@ -110,7 +116,7 @@ export const Content = ({ content }: any) => {
                 >
                   <Stack direction={'row'} spacing={1}>
                     <Button
-                      onClick={() => setOpen(true)}
+                      onClick={() => openModal(item)}
                       endDecorator={<LiaEye />}
                     >
                       View
@@ -147,16 +153,11 @@ export const Content = ({ content }: any) => {
                 </Stack>
               </Stack>
             </motion.div>
-
-            <BasicModal
-              open={open}
-              setOpen={setOpen}
-              content={content}
-              item={item}
-            />
           </Grid>
         ))}
       </Grid>
+
+      <BasicModal open={open} setOpen={setOpen} item={modalContent} />
 
       <Snackbar
         open={openSnack}

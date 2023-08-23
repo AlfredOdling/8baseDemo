@@ -21,7 +21,7 @@ export function ContentsPage() {
 
   return (
     <Stack
-      width={'75%'}
+      width={'90%'}
       maxWidth={'800px'}
       alignItems={'flex-start'}
       p={3}

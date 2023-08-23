@@ -16,7 +16,6 @@ export const usePersistState = <Type>(key: string, initialState: Type) => {
     let value = null
     try {
       const jsonValue = localStorage.getItem(key)
-      console.log('🚀  jsonValue:', jsonValue)
       value = jsonValue !== null ? JSON.parse(jsonValue) : null
 
       if (value === 'false') {

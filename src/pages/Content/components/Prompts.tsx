@@ -15,7 +15,6 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const sortedcreatedAt = promptsList?.data?.sort((a: any, b: any) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
-  console.log('🚀  promptsList?.data:', promptsList?.data)
 
   if (promptsList.isLoading) {
     return <LiaSpinnerSolid color="white" />

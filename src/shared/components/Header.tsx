@@ -24,7 +24,10 @@ export const Header = () => {
       direction={'row'}
       justifyContent={'space-between'}
     >
-      <IconButton onClick={() => navigate(-1)}>
+      <IconButton
+        disabled={window.location.pathname === '/'}
+        onClick={() => navigate(-1)}
+      >
         <LiaArrowLeftSolid />
       </IconButton>
 
