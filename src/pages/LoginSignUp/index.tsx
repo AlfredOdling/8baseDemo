@@ -6,9 +6,13 @@ import useMeasure from 'react-use-measure'
 import { Shapes } from './Shapes'
 import { transition } from './settings'
 import './styles.css'
+import { Alert } from '@mui/material'
+import { Link, Stack } from '@mui/joy'
+import { Button } from '../../shared/components/Button'
 
 export function LoginSignUpPage() {
   const { loginWithRedirect } = useAuth0()
+  const [show, setShow] = useState(false)
 
   const [ref, bounds] = useMeasure({ scroll: false })
   const [isHover, setIsHover] = useState(false)
@@ -22,65 +26,164 @@ export function LoginSignUpPage() {
   }
 
   return (
-    <MotionConfig transition={transition}>
-      <div className="bodyish">
-        <motion.button
-          id="loginButton"
-          className="animation"
-          ref={ref}
-          initial={false}
-          animate={isHover ? 'hover' : 'rest'}
-          whileTap="press"
-          variants={{
-            rest: { scale: 1 },
-            hover: { scale: 1.3 },
-            press: { scale: 1.2 },
-          }}
-          onHoverStart={() => {
-            resetMousePosition()
-            setIsHover(true)
-          }}
-          onHoverEnd={() => {
-            resetMousePosition()
-            setIsHover(false)
-          }}
-          onTapStart={() => setIsPress(true)}
-          onTap={() => setIsPress(false)}
-          onClick={() => loginWithRedirect()}
-          onTapCancel={() => setIsPress(false)}
-          onPointerMove={e => {
-            mouseX.set(e.clientX - bounds.x - bounds.width / 2)
-            mouseY.set(e.clientY - bounds.y - bounds.height / 2)
-          }}
-        >
-          <motion.div
-            className="shapes"
+    <>
+      <MotionConfig transition={transition}>
+        <div className="bodyish">
+          <motion.button
+            id="loginButton"
+            className="animation"
+            ref={ref}
+            initial={false}
+            animate={isHover ? 'hover' : 'rest'}
+            whileTap="press"
             variants={{
-              rest: { opacity: 0 },
-              hover: { opacity: 1 },
+              rest: { scale: 1 },
+              hover: { scale: 1.3 },
+              press: { scale: 1.2 },
+            }}
+            onHoverStart={() => {
+              resetMousePosition()
+              setIsHover(true)
+            }}
+            onHoverEnd={() => {
+              resetMousePosition()
+              setIsHover(false)
+            }}
+            onTapStart={() => setIsPress(true)}
+            onTap={() => setIsPress(false)}
+            onClick={() => loginWithRedirect()}
+            onTapCancel={() => setIsPress(false)}
+            onPointerMove={e => {
+              mouseX.set(e.clientX - bounds.x - bounds.width / 2)
+              mouseY.set(e.clientY - bounds.y - bounds.height / 2)
             }}
           >
-            <div className="pink blush" />
-            <div className="blue blush" />
-            <div className="container">
-              <Suspense fallback={null}>
-                <Shapes
-                  isHover={isHover}
-                  isPress={isPress}
-                  mouseX={mouseX}
-                  mouseY={mouseY}
-                />
-              </Suspense>
-            </div>
-          </motion.div>
-          <motion.div
-            variants={{ hover: { scale: 0.85 }, press: { scale: 1.1 } }}
-            className="label"
+            <motion.div
+              className="shapes"
+              variants={{
+                rest: { opacity: 0 },
+                hover: { opacity: 1 },
+              }}
+            >
+              <div className="pink blush" />
+              <div className="blue blush" />
+              <div className="container">
+                <Suspense fallback={null}>
+                  <Shapes
+                    isHover={isHover}
+                    isPress={isPress}
+                    mouseX={mouseX}
+                    mouseY={mouseY}
+                  />
+                </Suspense>
+              </div>
+            </motion.div>
+            <motion.div
+              variants={{ hover: { scale: 0.85 }, press: { scale: 1.1 } }}
+              className="label"
+            >
+              Enter
+            </motion.div>
+          </motion.button>
+        </div>
+      </MotionConfig>
+
+      <Button
+        onClick={() => setShow(!show)}
+        sx={{
+          position: 'absolute',
+          top: '20px',
+          left: '0',
+          right: '0',
+          width: '190px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
+      >
+        How was this made?
+      </Button>
+
+      {show && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <Alert
+            sx={{
+              position: 'absolute',
+              top: '80px',
+              //center position absolute responsive
+              left: '0',
+              right: '0',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              maxWidth: '90%',
+              width: '500px',
+            }}
+            severity="info"
           >
-            Enter
-          </motion.div>
-        </motion.button>
-      </div>
-    </MotionConfig>
+            <Stack>
+              <strong>Backend: </strong>
+              <Link referrerPolicy="no-referrer" href="https://www.8base.com/">
+                - 8base (GraphQL BaaS)
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://flask.palletsprojects.com/en/2.3.x/"
+              >
+                - Flask (running OpenAIs python API)
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://www.railway.app/"
+              >
+                - Railway (hosting Flask server)
+              </Link>
+            </Stack>
+
+            <Stack mt={2}>
+              <strong>Frontend: </strong>
+              <Link referrerPolicy="no-referrer" href="https://react.dev/">
+                - React
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://mui.com/joy-ui/getting-started/"
+              >
+                - MUI Joy (Component library)
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://tanstack.com/query/v3/"
+              >
+                - React Query (Data fetching)
+              </Link>
+              <Link referrerPolicy="no-referrer" href="https://netlify.com/">
+                - Netlify (Hosting)
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://www.framer.com/motion/"
+              >
+                - Framer Motion / Framer Motion 3D (Animations)
+              </Link>
+            </Stack>
+
+            <Stack mt={2}>
+              <strong>Github </strong>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://github.com/AlfredOdling/8baseDemo"
+              >
+                - Frontend
+              </Link>
+              <Link
+                referrerPolicy="no-referrer"
+                href="https://github.com/AlfredOdling/flask"
+              >
+                - Backend
+              </Link>
+            </Stack>
+          </Alert>
+        </motion.div>
+      )}
+    </>
   )
 }

@@ -17,6 +17,8 @@ export const Button = (props: ButtonProps) => (
       '&.MuiButton-loading': {
         background: 'transparent ',
       },
+
+      ...props.sx,
     }}
   />
 )
