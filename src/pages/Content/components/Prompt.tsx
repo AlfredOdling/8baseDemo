@@ -15,13 +15,13 @@ import { usePromptDelete } from '../../../api/usePrompts/promptDelete'
 import { usePromptUpdate } from '../../../api/usePrompts/promptUpdate'
 import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
 import { neumorph } from '../../../shared/styles'
-import { Button } from '../../../shared/components/base/Button'
-import { IconButton } from '../../../shared/components/base/IconButton'
 import {
   Grid,
   Stack,
   Textarea,
   Typography,
+  IconButton,
+  Button,
 } from '../../../shared/components/base'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {

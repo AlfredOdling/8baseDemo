@@ -11,6 +11,8 @@ import { Select } from './Select'
 import { Option } from './Option'
 import { Input } from './Input'
 import { Link } from './Link'
+import { IconButton } from './IconButton'
+import { Button } from './Button'
 
 export {
   Divider,
@@ -26,4 +28,6 @@ export {
   Option,
   Input,
   Link,
+  IconButton,
+  Button,
 }

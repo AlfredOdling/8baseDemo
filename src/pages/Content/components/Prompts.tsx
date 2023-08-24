@@ -4,8 +4,12 @@ import { LiaPlusSolid, LiaSpinnerSolid } from 'react-icons/lia'
 import { Prompt } from './Prompt'
 import { usePromptCreate } from '../../../api/usePrompts/promptCreate'
 import { usePromptsList } from '../../../api/usePrompts/promptList'
-import { IconButton } from '../../../shared/components/base/IconButton'
-import { Grid, Stack, Typography } from '../../../shared/components/base'
+import {
+  Grid,
+  Stack,
+  Typography,
+  IconButton,
+} from '../../../shared/components/base'
 
 export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
   const promptCreate = usePromptCreate()

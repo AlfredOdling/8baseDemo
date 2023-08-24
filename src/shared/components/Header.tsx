@@ -33,21 +33,23 @@ export const Header = () => {
 
       <Typography textColor={'white'}>{user?.name}</Typography>
 
-      <Button
-        onClick={() =>
-          logout({
-            logoutParams: {
-              returnTo:
-                process.env.NODE_ENV === 'production'
-                  ? 'https://main--delicate-eclair-57fb94.netlify.app/loginSignUp'
-                  : 'http://localhost:3000/loginSignUp',
-            },
-          })
-        }
-      >
-        Logout
-        <LiaSignOutAltSolid style={{ marginLeft: '5px', strokeWidth: 1.2 }} />
-      </Button>
+      <Stack direction={'row'} spacing={2}>
+        <Button
+          onClick={() =>
+            logout({
+              logoutParams: {
+                returnTo:
+                  process.env.NODE_ENV === 'production'
+                    ? 'https://main--delicate-eclair-57fb94.netlify.app/loginSignUp'
+                    : 'http://localhost:3000/loginSignUp',
+              },
+            })
+          }
+        >
+          Logout
+          <LiaSignOutAltSolid style={{ marginLeft: '5px', strokeWidth: 1.2 }} />
+        </Button>
+      </Stack>
     </Stack>
   )
 }
