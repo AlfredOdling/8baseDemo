@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useAuth0 } from '@auth0/auth0-react'
 
-import { Stack, Grid, Typography, Textarea } from '@mui/joy'
 import {
   LiaMarkerSolid,
   LiaPenSolid,
@@ -15,9 +15,14 @@ import { usePromptDelete } from '../../../api/usePrompts/promptDelete'
 import { usePromptUpdate } from '../../../api/usePrompts/promptUpdate'
 import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
 import { neumorph } from '../../../shared/styles'
-import { Button } from '../../../shared/components/Button'
-import { IconButton } from '../../../shared/components/IconButton'
-import { useAuth0 } from '@auth0/auth0-react'
+import { Button } from '../../../shared/components/base/Button'
+import { IconButton } from '../../../shared/components/base/IconButton'
+import {
+  Grid,
+  Stack,
+  Textarea,
+  Typography,
+} from '../../../shared/components/base'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const [edit, setEdit] = useState(false)

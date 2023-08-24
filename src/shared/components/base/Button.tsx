@@ -1,5 +1,5 @@
 import { Button as ButtonMUI, ButtonProps } from '@mui/joy'
-import { neumorphButton } from '../styles'
+import { neumorphButton } from '../../styles'
 
 export const Button = (props: ButtonProps) => (
   <ButtonMUI

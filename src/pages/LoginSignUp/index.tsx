@@ -5,10 +5,9 @@ import useMeasure from 'react-use-measure'
 
 import { Shapes } from './Shapes'
 import { transition } from './settings'
+import { Button } from '../../shared/components/base/Button'
+import { Alert, Stack, Link } from '../../shared/components/base'
 import './styles.css'
-import { Alert } from '@mui/material'
-import { Link, Stack } from '@mui/joy'
-import { Button } from '../../shared/components/Button'
 
 export function LoginSignUpPage() {
   const { loginWithRedirect } = useAuth0()

@@ -1,7 +1,9 @@
-import Modal from '@mui/joy/Modal'
-import ModalClose from '@mui/joy/ModalClose'
-import Typography from '@mui/joy/Typography'
-import Sheet from '@mui/joy/Sheet'
+import {
+  Modal,
+  ModalClose,
+  Sheet,
+  Typography,
+} from '../../../shared/components/base'
 
 export const BasicModal = ({ open, setOpen, item }: any) => {
   return (

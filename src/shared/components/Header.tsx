@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { LiaArrowLeftSolid, LiaSignOutAltSolid } from 'react-icons/lia'
-import { Stack, Typography } from '@mui/joy'
 
 import { neumorph } from '../styles'
-import { IconButton } from './IconButton'
-import { Button } from './Button'
+import { IconButton } from './base/IconButton'
+import { Button } from './base/Button'
+import { Stack, Typography } from './base'
 
 export const Header = () => {
   const navigate = useNavigate()

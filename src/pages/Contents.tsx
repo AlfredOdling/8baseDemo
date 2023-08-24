@@ -1,6 +1,4 @@
-import Stack from '@mui/joy/Stack'
 import { motion } from 'framer-motion'
-import { Divider, Typography } from '@mui/joy'
 import { LiaPlusSolid, LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
@@ -8,9 +6,12 @@ import { useMediaQuery } from 'react-responsive'
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
 import { useContentDelete } from '../api/useContent/contentDelete'
-import { Button } from '../shared/components/Button'
+import { Button } from '../shared/components/base/Button'
 import { neumorph } from '../shared/styles'
-import { IconButton } from '../shared/components/IconButton'
+import { IconButton } from '../shared/components/base/IconButton'
+import { Stack } from '../shared/components/base/Stack'
+import { Typography } from '../shared/components/base/Typography'
+import { Divider } from '../shared/components/base/Divider'
 
 export function ContentsPage() {
   const navigate = useNavigate()

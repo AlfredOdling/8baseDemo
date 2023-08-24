@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { LiaLockSolid, LiaSpinnerSolid, LiaUnlockSolid } from 'react-icons/lia'
-import { Stack, Input, Option, Select, Textarea, Typography } from '@mui/joy'
 import { useMediaQuery } from 'react-responsive'
 
 import { Prompts } from './components/Prompts'
 import { useContent } from '../../api/useContent/content'
 import { neumorph } from '../../shared/styles'
-import { IconButton } from '../../shared/components/IconButton'
 import { useContentUpdate } from '../../api/useContent/contentUpdate'
 import { Content } from './components/Content'
 import { usePromptsList } from '../../api/usePrompts/promptList'
+import {
+  Option,
+  Select,
+  Stack,
+  Textarea,
+  Typography,
+  Input,
+} from '../../shared/components/base'
+import { IconButton } from '../../shared/components/base/IconButton'
 
 export function ContentPage() {
   const [selectValue, setSelectValue] = useState<string | null>('website')

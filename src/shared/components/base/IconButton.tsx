@@ -1,5 +1,5 @@
 import { IconButton as IconButtonMUI, IconButtonProps } from '@mui/joy'
-import { neumorphIconButton } from '../styles'
+import { neumorphIconButton } from '../../styles'
 
 interface IconButtonProps_ extends IconButtonProps {
   pulsate?: boolean

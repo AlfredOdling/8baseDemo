@@ -1,19 +1,25 @@
+import { useState } from 'react'
 import {
   LiaCopy,
   LiaEye,
   LiaSpinnerSolid,
   LiaTrashSolid,
 } from 'react-icons/lia'
-import { Stack, Typography, Grid, Divider } from '@mui/joy'
 import { motion } from 'framer-motion'
 
 import { useContentTextDelete } from '../../../api/useContent/contentTextDelete'
 import { neumorph } from '../../../shared/styles'
-import { IconButton } from '../../../shared/components/IconButton'
-import { Button } from '../../../shared/components/Button'
-import { useState } from 'react'
 import { BasicModal } from './ContentModal'
-import { Alert, Snackbar } from '@mui/material'
+import {
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from '../../../shared/components/base'
+import { Button } from '../../../shared/components/base/Button'
+import { IconButton } from '../../../shared/components/base/IconButton'
+import { Snackbar } from '../../../shared/components/base/Snackbar'
+import { Alert } from '../../../shared/components/base/Alert'
 
 export const Content = ({ content }: any) => {
   const contentTextDelete = useContentTextDelete()
