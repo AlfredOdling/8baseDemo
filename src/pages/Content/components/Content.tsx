@@ -1,31 +1,30 @@
 import { useState } from 'react'
-import {
-  LiaCopy,
-  LiaEye,
-  LiaSpinnerSolid,
-  LiaTrashSolid,
-} from 'react-icons/lia'
+import { LiaEye, LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
 import { motion } from 'framer-motion'
+import { IconCopy, IconCheck } from '@tabler/icons-react'
 
 import { useContentTextDelete } from '../../../api/useContent/contentTextDelete'
 import { neumorph } from '../../../shared/styles'
 import { BasicModal } from './ContentModal'
 import {
+  ActionIcon,
+  Button,
+  CopyButton,
   Divider,
   Grid,
+  Group,
   Stack,
-  Typography,
-} from '../../../shared/components/base'
-import { Button } from '../../../shared/components/base/Button'
-import { IconButton } from '../../../shared/components/base/IconButton'
-import { Snackbar } from '../../../shared/components/base/Snackbar'
-import { Alert } from '../../../shared/components/base/Alert'
+  Text,
+  Title,
+  Tooltip,
+  rem,
+} from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 
 export const Content = ({ content }: any) => {
   const contentTextDelete = useContentTextDelete()
-  const [open, setOpen] = useState(false)
+  const [opened, { open, close }] = useDisclosure(false)
   const [modalContent, setModalContent] = useState({})
-  const [openSnack, setOpenSnack] = useState(false)
 
   const sortedUpdatedAt = content.data?.contentText?.items.sort(
     (a: any, b: any) => {
@@ -34,20 +33,8 @@ export const Content = ({ content }: any) => {
   )
 
   const openModal = (item: any) => {
-    setOpen(true)
     setModalContent(item)
-  }
-
-  const handleClick = () => {
-    setOpenSnack(true)
-  }
-
-  const handleClose = (_: any, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpenSnack(false)
+    open()
   }
 
   if (content.isLoading) {
@@ -56,17 +43,21 @@ export const Content = ({ content }: any) => {
 
   return (
     <>
-      <Typography textColor={'white'} level="h4">
+      <Title
+        order={4}
+        sx={{
+          marginTop: 10,
+        }}
+      >
         Content
-      </Typography>
+      </Title>
 
       <Grid
-        container
-        width={'100%'}
-        spacing={2}
+        gutter="md"
+        grow
         sx={{
           flexGrow: 1,
-          padding: 1,
+          padding: 10,
           maxHeight: '600px',
           overflowY: 'auto',
           overflowX: 'hidden',
@@ -75,75 +66,65 @@ export const Content = ({ content }: any) => {
         }}
       >
         {sortedUpdatedAt.map((item: any) => (
-          <Grid xs={12} md={6} key={`${item.id}-content`}>
+          <Grid.Col xs={12} md={6} key={`${item.id}-content`}>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <Stack
                 key={`${item.id}-content`}
-                height={'220px'}
-                p={1.5}
-                alignItems={'flex-start'}
-                justifyContent={'space-between'}
                 sx={{
                   ...neumorph,
+                  height: '220px',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  padding: 15,
                 }}
               >
-                <Stack spacing={2}>
-                  <Typography
-                    textColor={'white'}
-                    fontWeight={'bold'}
-                    sx={{
-                      overflow: 'hidden',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '1',
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
-                    {item.prompt}
-                  </Typography>
+                <Stack spacing={10}>
+                  <Text lineClamp={1}>{item.prompt}</Text>
                   <Divider />
 
-                  <Typography
-                    textColor={'white'}
-                    sx={{
-                      overflow: 'hidden',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '3',
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
-                    {item.text}
-                  </Typography>
+                  <Text lineClamp={3}>{item.text}</Text>
                 </Stack>
 
-                <Stack
-                  direction={'row'}
-                  justifyContent={'space-between'}
-                  width={'100%'}
+                <Group
+                  sx={{
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
                 >
-                  <Stack direction={'row'} spacing={1}>
+                  <Group spacing={8}>
                     <Button
                       onClick={() => openModal(item)}
-                      endDecorator={<LiaEye />}
+                      leftIcon={<LiaEye />}
                     >
                       View
                     </Button>
 
-                    <IconButton
-                      variant="solid"
-                      size="sm"
-                      onClick={() =>
-                        navigator.clipboard.writeText(item.text).then(() => {
-                          handleClick()
-                        })
-                      }
-                    >
-                      <LiaCopy />
-                    </IconButton>
-                  </Stack>
+                    <CopyButton value="https://mantine.dev" timeout={2000}>
+                      {({ copied, copy }) => (
+                        <Tooltip
+                          label={copied ? 'Copied' : 'Copy'}
+                          withArrow
+                          position="right"
+                        >
+                          <ActionIcon
+                            color={copied ? 'teal' : 'gray'}
+                            variant="subtle"
+                            onClick={copy}
+                          >
+                            {copied ? (
+                              <IconCheck style={{ width: rem(16) }} />
+                            ) : (
+                              <IconCopy style={{ width: rem(16) }} />
+                            )}
+                          </ActionIcon>
+                        </Tooltip>
+                      )}
+                    </CopyButton>
+                  </Group>
 
-                  <IconButton
+                  <ActionIcon
                     variant="solid"
-                    size="sm"
+                    size="lg"
                     onClick={() =>
                       contentTextDelete.mutate({
                         id: item.id,
@@ -155,29 +136,15 @@ export const Content = ({ content }: any) => {
                     ) : (
                       <LiaTrashSolid />
                     )}
-                  </IconButton>
-                </Stack>
+                  </ActionIcon>
+                </Group>
               </Stack>
             </motion.div>
-          </Grid>
+          </Grid.Col>
         ))}
       </Grid>
 
-      <BasicModal open={open} setOpen={setOpen} item={modalContent} />
-
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={1000}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-      >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          Copied to clipboard!
-        </Alert>
-      </Snackbar>
+      <BasicModal opened={opened} close={close} item={modalContent} />
     </>
   )
 }

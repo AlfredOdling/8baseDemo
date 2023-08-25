@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { LiaLockSolid, LiaSpinnerSolid, LiaUnlockSolid } from 'react-icons/lia'
 import { useMediaQuery } from 'react-responsive'
+import { Group, TextInput, Select, Stack, Textarea, Title } from '@mantine/core'
 
 import { Prompts } from './components/Prompts'
 import { useContent } from '../../api/useContent/content'
@@ -9,15 +10,7 @@ import { neumorph } from '../../shared/styles'
 import { useContentUpdate } from '../../api/useContent/contentUpdate'
 import { Content } from './components/Content'
 import { usePromptsList } from '../../api/usePrompts/promptList'
-import {
-  Option,
-  Select,
-  Stack,
-  Textarea,
-  Typography,
-  Input,
-} from '../../shared/components/base'
-import { IconButton } from '../../shared/components/base/IconButton'
+import { ActionIcon } from '../../shared/components/ActionIcon'
 
 export function ContentPage() {
   const [selectValue, setSelectValue] = useState<string | null>('website')
@@ -42,30 +35,28 @@ export function ContentPage() {
 
   return (
     <Stack
-      width={'90%'}
-      maxWidth={'800px'}
-      alignItems={'flex-start'}
-      p={3}
-      spacing={3}
+      spacing={20}
       sx={{
         ...neumorph,
+        width: '90%',
+        maxWidth: '800px',
+        alignItems: 'flex-start',
+        padding: 25,
       }}
     >
-      <Typography textColor={'white'} level="h4">
-        {content.data?.title || 'Untitled'}
-      </Typography>
+      <Title order={4}>{content.data?.title || 'Untitled'}</Title>
 
-      <Stack
-        direction={'row'}
-        spacing={1}
-        alignItems={'flex-start'}
-        width={'100%'}
+      <Group
+        spacing={15}
+        align={'flex-start'}
+        sx={{
+          width: '100%',
+        }}
       >
         {selectValue === 'text' ? (
           <Textarea
             value={textValue}
             onChange={e => setTextValue(e.target.value)}
-            minRows={4}
             sx={{
               width: '100%',
               backgroundColor: 'transparent',
@@ -73,15 +64,10 @@ export function ContentPage() {
             }}
           />
         ) : (
-          <Input
+          <TextInput
             sx={{
-              backgroundColor: 'transparent',
-              color: 'white',
-              border: 'none',
-              boxShadow:
-                'inset 5px 5px 10px rgba(32, 31, 41, 0.2), inset -5px -5px 10px rgba(22, 21, 31, 0.3)',
+              width: isMobile ? '800px' : '600px',
             }}
-            fullWidth
             value={urlValue}
             onChange={e => setUrlValue(e.target.value)}
             placeholder="Add your URL here"
@@ -91,27 +77,19 @@ export function ContentPage() {
 
         <Select
           value={selectValue}
-          onChange={(_, val) => setSelectValue(val)}
+          onChange={setSelectValue}
           sx={{
-            ...neumorph,
             width: isMobile ? '200px' : '140px',
-            color: 'white',
-            border: 'none',
-            '&:hover': {
-              backgroundColor: 'transparent',
-            },
-            '& .MuiSelect-indicator': {
-              '--Icon-color': 'white',
-            },
           }}
-        >
-          <Option value="website">Website</Option>
-          <Option value="youtube">YouTube</Option>
-          {/* <Option value="text">Text</Option> */}
-        </Select>
+          data={[
+            { value: 'website', label: 'Website' },
+            { value: 'youtube', label: 'YouTube' },
+          ]}
+        />
 
-        <IconButton
+        <ActionIcon
           variant="solid"
+          size="lg"
           onClick={() =>
             contentUpdate
               .mutateAsync({
@@ -131,8 +109,8 @@ export function ContentPage() {
           ) : (
             <LiaUnlockSolid />
           )}
-        </IconButton>
-      </Stack>
+        </ActionIcon>
+      </Group>
 
       {textValue ||
         (urlValue && lock && (

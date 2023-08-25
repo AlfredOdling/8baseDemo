@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuth0 } from '@auth0/auth0-react'
 
+import { Button, Grid, Group, Stack, Text, Textarea } from '@mantine/core'
 import {
   LiaMarkerSolid,
   LiaPenSolid,
@@ -15,14 +16,7 @@ import { usePromptDelete } from '../../../api/usePrompts/promptDelete'
 import { usePromptUpdate } from '../../../api/usePrompts/promptUpdate'
 import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
 import { neumorph } from '../../../shared/styles'
-import {
-  Grid,
-  Stack,
-  Textarea,
-  Typography,
-  IconButton,
-  Button,
-} from '../../../shared/components/base'
+import { ActionIcon } from '../../../shared/components/ActionIcon'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const [edit, setEdit] = useState(false)
@@ -35,16 +29,16 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
   const contentUpdate = useContentTextCreate()
 
   return (
-    <Grid xs={12} md={6}>
+    <Grid.Col xs={12} md={6}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Stack
-          alignItems={'flex-start'}
-          justifyContent={'space-between'}
-          height={'150px'}
-          p={1.5}
-          borderRadius={6}
+          align={'flex-start'}
+          justify={'space-between'}
           sx={{
             ...neumorph,
+            borderRadius: 6,
+            height: '150px',
+            padding: 15,
           }}
         >
           {edit ? (
@@ -54,15 +48,14 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                 backgroundColor: 'transparent',
                 color: 'white',
               }}
-              maxRows={3}
               value={input}
               onChange={e => setInput(e.target.value)}
             />
           ) : (
-            <Typography textColor={'white'}>{item.prompt}</Typography>
+            <Text lineClamp={3}>{item.prompt}</Text>
           )}
 
-          <Stack direction={'row'} spacing={1}>
+          <Group spacing={8}>
             <Button
               key={item.id}
               loading={contentUpdate.isLoading}
@@ -75,22 +68,22 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                   prompt: item.prompt,
                 })
               }
-              endDecorator={<LiaMarkerSolid />}
+              leftIcon={<LiaMarkerSolid />}
             >
               Generate
             </Button>
 
-            <IconButton
+            <ActionIcon
               variant="solid"
-              size="sm"
+              size="lg"
               onClick={() => setEdit(!edit)}
             >
               <LiaPenSolid />
-            </IconButton>
+            </ActionIcon>
 
-            <IconButton
+            <ActionIcon
               variant="solid"
-              size="sm"
+              size="lg"
               onClick={() =>
                 promptDelete.mutate({
                   id: item.id,
@@ -98,12 +91,11 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
               }
             >
               {promptDelete.isLoading ? <LiaSpinnerSolid /> : <LiaTrashSolid />}
-            </IconButton>
+            </ActionIcon>
 
             {edit && (
-              <IconButton
+              <ActionIcon
                 variant="solid"
-                size="sm"
                 pulsate
                 onClick={() =>
                   promptUpdate
@@ -127,11 +119,11 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                 ) : (
                   <LiaSaveSolid />
                 )}
-              </IconButton>
+              </ActionIcon>
             )}
-          </Stack>
+          </Group>
         </Stack>
       </motion.div>
-    </Grid>
+    </Grid.Col>
   )
 }

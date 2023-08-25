@@ -1,58 +1,28 @@
-import {
-  Modal,
-  ModalClose,
-  Sheet,
-  Typography,
-} from '../../../shared/components/base'
+import { ActionIcon, Group, Modal, Stack, Text, Title } from '@mantine/core'
+import { LiaCrossSolid } from 'react-icons/lia'
 
-export const BasicModal = ({ open, setOpen, item }: any) => {
+export const BasicModal = (props: any) => {
+  const { opened, close, item } = props
+
   return (
-    <>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+    <Modal opened={opened} onClose={close} withCloseButton={false} bg={'red'}>
+      <Stack
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: 3,
+          height: '400px',
         }}
       >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 800,
-            borderRadius: 'md',
-            p: 3,
-            boxShadow: 'lg',
-            maxHeight: '500px',
-            overflowY: 'auto',
-            overflowX: 'hidden',
-          }}
-        >
-          <ModalClose
-            variant="outlined"
-            sx={{
-              boxShadow: '0 2px 12px 0 rgba(0 0 0 / 0.2)',
-              borderRadius: '50%',
-              bgcolor: 'background.surface',
-            }}
-          />
-          <Typography
-            component="h2"
-            id="modal-title"
-            level="h4"
-            textColor="inherit"
-            fontWeight="lg"
-            mb={1}
-          >
+        <Group>
+          <ActionIcon variant="solid" size="lg" onClick={close}>
+            <LiaCrossSolid color="black" />
+          </ActionIcon>
+
+          <Title order={4} color="black !important">
             {item.prompt}
-          </Typography>
-          <Typography id="modal-desc" textColor="text.tertiary">
-            {item.text}
-          </Typography>
-        </Sheet>
-      </Modal>
-    </>
+          </Title>
+        </Group>
+
+        <Text color="black !important">{item.text}</Text>
+      </Stack>
+    </Modal>
   )
 }

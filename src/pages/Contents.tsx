@@ -6,12 +6,8 @@ import { useMediaQuery } from 'react-responsive'
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
 import { useContentDelete } from '../api/useContent/contentDelete'
-import { Button } from '../shared/components/base/Button'
 import { neumorph } from '../shared/styles'
-import { IconButton } from '../shared/components/base/IconButton'
-import { Stack } from '../shared/components/base/Stack'
-import { Typography } from '../shared/components/base/Typography'
-import { Divider } from '../shared/components/base/Divider'
+import { ActionIcon, Button, Divider, Group, Stack, Title } from '@mantine/core'
 
 export function ContentsPage() {
   const navigate = useNavigate()
@@ -22,29 +18,27 @@ export function ContentsPage() {
 
   return (
     <Stack
-      width={'90%'}
-      maxWidth={'800px'}
-      alignItems={'flex-start'}
-      p={3}
-      spacing={3}
+      spacing={15}
       sx={{
         ...neumorph,
+        width: '90%',
+        maxWidth: '800px',
+        alignItems: 'flex-start',
+        padding: 25,
       }}
     >
-      <Stack width={'100%'} direction={'row'} justifyContent={'space-between'}>
-        <Typography textColor={'white'} level="h2">
-          Content
-        </Typography>
+      <Group sx={{ width: '100%', justifyContent: 'space-between' }}>
+        <Title order={2}>Content</Title>
         <Divider />
 
         <Button
           loading={contentCreate.isLoading}
           onClick={() => contentCreate.mutate()}
-          endDecorator={<LiaPlusSolid />}
+          leftIcon={<LiaPlusSolid />}
         >
           New
         </Button>
-      </Stack>
+      </Group>
       <Divider />
 
       {contentsList?.data?.map((item: any) => (
@@ -53,7 +47,7 @@ export function ContentsPage() {
           animate={{ opacity: 1 }}
           key={`${item.id}-contents`}
         >
-          <Stack direction={'row'} spacing={2}>
+          <Group spacing={10}>
             <Button onClick={() => navigate(item.id)}>
               {!isMobile
                 ? item.title
@@ -62,7 +56,7 @@ export function ContentsPage() {
                 : item.title}
             </Button>
 
-            <IconButton
+            <ActionIcon
               variant="solid"
               size="sm"
               onClick={() => contentDelete.mutate(item.id)}
@@ -72,8 +66,8 @@ export function ContentsPage() {
               ) : (
                 <LiaTrashSolid />
               )}
-            </IconButton>
-          </Stack>
+            </ActionIcon>
+          </Group>
         </motion.div>
       ))}
     </Stack>

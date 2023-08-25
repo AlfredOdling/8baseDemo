@@ -3,37 +3,34 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { LiaArrowLeftSolid, LiaSignOutAltSolid } from 'react-icons/lia'
 
 import { neumorph } from '../styles'
-import { IconButton } from './base/IconButton'
-import { Button } from './base/Button'
-import { Stack, Typography } from './base'
+import { Button, Group, Title } from '@mantine/core'
+import { ActionIcon } from './ActionIcon'
 
 export const Header = () => {
   const navigate = useNavigate()
   const { logout, user } = useAuth0()
 
   return (
-    <Stack
+    <Group
       sx={{
         ...neumorph,
         width: '100%',
         alignItems: 'center',
         marginBottom: '40px',
-        direction: 'row',
         padding: '10px',
+        justifyContent: 'space-between',
       }}
-      direction={'row'}
-      justifyContent={'space-between'}
     >
-      <IconButton
+      <ActionIcon
         disabled={window.location.pathname === '/'}
         onClick={() => navigate(-1)}
       >
         <LiaArrowLeftSolid />
-      </IconButton>
+      </ActionIcon>
 
-      <Typography textColor={'white'}>{user?.name}</Typography>
+      <Title>{user?.name}</Title>
 
-      <Stack direction={'row'} spacing={2}>
+      <Group spacing={2}>
         <Button
           onClick={() =>
             logout({
@@ -49,7 +46,7 @@ export const Header = () => {
           Logout
           <LiaSignOutAltSolid style={{ marginLeft: '5px', strokeWidth: 1.2 }} />
         </Button>
-      </Stack>
-    </Stack>
+      </Group>
+    </Group>
   )
 }

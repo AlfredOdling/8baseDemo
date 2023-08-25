@@ -5,9 +5,8 @@ import useMeasure from 'react-use-measure'
 
 import { Shapes } from './Shapes'
 import { transition } from './settings'
-import { Button } from '../../shared/components/base/Button'
-import { Alert, Stack, Link } from '../../shared/components/base'
 import './styles.css'
+import { Alert, Anchor, Button, Stack } from '@mantine/core'
 
 export function LoginSignUpPage() {
   const { loginWithRedirect } = useAuth0()
@@ -116,69 +115,72 @@ export function LoginSignUpPage() {
               maxWidth: '90%',
               width: '500px',
             }}
-            severity="info"
+            color="blue"
           >
             <Stack>
               <strong>Backend: </strong>
-              <Link referrerPolicy="no-referrer" href="https://www.8base.com/">
+              <Anchor
+                referrerPolicy="no-referrer"
+                href="https://www.8base.com/"
+              >
                 - 8base (GraphQL BaaS)
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://flask.palletsprojects.com/en/2.3.x/"
               >
                 - Flask (running OpenAIs python API)
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://www.railway.app/"
               >
                 - Railway (hosting Flask server)
-              </Link>
+              </Anchor>
             </Stack>
 
             <Stack mt={2}>
               <strong>Frontend: </strong>
-              <Link referrerPolicy="no-referrer" href="https://react.dev/">
+              <Anchor referrerPolicy="no-referrer" href="https://react.dev/">
                 - React
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://mui.com/joy-ui/getting-started/"
               >
                 - MUI Joy (Component library)
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://tanstack.com/query/v3/"
               >
                 - React Query (Data fetching)
-              </Link>
-              <Link referrerPolicy="no-referrer" href="https://netlify.com/">
+              </Anchor>
+              <Anchor referrerPolicy="no-referrer" href="https://netlify.com/">
                 - Netlify (Hosting)
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://www.framer.com/motion/"
               >
                 - Framer Motion / Framer Motion 3D (Animations)
-              </Link>
+              </Anchor>
             </Stack>
 
             <Stack mt={2}>
               <strong>Github </strong>
-              <Link
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://github.com/AlfredOdling/8baseDemo"
               >
                 - Frontend
-              </Link>
-              <Link
+              </Anchor>
+              <Anchor
                 referrerPolicy="no-referrer"
                 href="https://github.com/AlfredOdling/flask"
               >
                 - Backend
-              </Link>
+              </Anchor>
             </Stack>
           </Alert>
         </motion.div>
