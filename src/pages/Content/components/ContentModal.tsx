@@ -1,26 +1,30 @@
-import { ActionIcon, Group, Modal, Stack, Text, Title } from '@mantine/core'
-import { LiaCrossSolid } from 'react-icons/lia'
+import { Modal, Stack, Text } from '@mantine/core'
 
-export const BasicModal = (props: any) => {
+interface IContentModal {
+  opened: boolean
+  close: () => void
+  item: any
+}
+
+export const BasicModal = (props: IContentModal) => {
   const { opened, close, item } = props
 
   return (
-    <Modal opened={opened} onClose={close} withCloseButton={false} bg={'red'}>
+    <Modal
+      opened={opened}
+      onClose={close}
+      title={item.prompt}
+      closeButtonProps={{
+        sx: {
+          all: 'inherit',
+        },
+      }}
+    >
       <Stack
         sx={{
           height: '400px',
         }}
       >
-        <Group>
-          <ActionIcon variant="solid" size="lg" onClick={close}>
-            <LiaCrossSolid color="black" />
-          </ActionIcon>
-
-          <Title order={4} color="black !important">
-            {item.prompt}
-          </Title>
-        </Group>
-
         <Text color="black !important">{item.text}</Text>
       </Stack>
     </Modal>
