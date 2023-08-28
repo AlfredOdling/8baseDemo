@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { LiaLockSolid, LiaSpinnerSolid, LiaUnlockSolid } from 'react-icons/lia'
+import {
+  LiaInternetExplorer,
+  LiaLockSolid,
+  LiaSpinnerSolid,
+  LiaUnlockSolid,
+  LiaWeebly,
+  LiaYoutube,
+} from 'react-icons/lia'
 import { useMediaQuery } from 'react-responsive'
 import { Group, TextInput, Select, Stack, Textarea, Title } from '@mantine/core'
 
@@ -33,6 +40,16 @@ export function ContentPage() {
     return <LiaSpinnerSolid color="white" />
   }
 
+  const setValue = (value: string) => {
+    setUrlValue(value)
+
+    if (value.includes('youtube')) {
+      setSelectValue('youtube')
+    } else {
+      setSelectValue('website')
+    }
+  }
+
   return (
     <Stack
       spacing={20}
@@ -53,38 +70,21 @@ export function ContentPage() {
           width: '100%',
         }}
       >
-        {selectValue === 'text' ? (
-          <Textarea
-            value={textValue}
-            onChange={e => setTextValue(e.target.value)}
-            sx={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              color: 'white',
-            }}
-          />
-        ) : (
-          <TextInput
-            sx={{
-              width: isMobile ? '800px' : '600px',
-            }}
-            value={urlValue}
-            onChange={e => setUrlValue(e.target.value)}
-            placeholder="Add your URL here"
-            disabled={lock}
-          />
-        )}
-
-        <Select
-          value={selectValue}
-          onChange={setSelectValue}
+        <TextInput
           sx={{
-            width: isMobile ? '200px' : '140px',
+            flex: 'auto',
           }}
-          data={[
-            { value: 'website', label: 'Website' },
-            { value: 'youtube', label: 'YouTube' },
-          ]}
+          value={urlValue}
+          onChange={e => setValue(e.target.value)}
+          placeholder="Add a website or YouTube link"
+          disabled={lock}
+          rightSection={
+            selectValue === 'youtube' ? (
+              <LiaYoutube color="white" />
+            ) : (
+              <LiaInternetExplorer color="white" />
+            )
+          }
         />
 
         <ActionIcon
