@@ -1,8 +1,4 @@
 body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(
       45deg,
       rgb(22, 21, 31, 1) 0%,
@@ -10,9 +6,4 @@ body {
       rgb(0, 156, 188) 100%
     )
     no-repeat center center fixed;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }

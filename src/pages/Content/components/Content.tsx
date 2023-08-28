@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { IconCopy, IconCheck } from '@tabler/icons-react'
 
 import { useContentTextDelete } from '../../../api/useContent/contentTextDelete'
-import { neumorph } from '../../../shared/styles'
+import { neumorph } from '../../../shared/styles/styles'
 import { BasicModal } from './ContentModal'
 import {
   ActionIcon,

@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
 import { useContentDelete } from '../api/useContent/contentDelete'
-import { neumorph } from '../shared/styles'
+import { neumorph } from '../shared/styles/styles'
 import { ActionIcon, Button, Divider, Group, Stack, Title } from '@mantine/core'
 
 export function ContentsPage() {

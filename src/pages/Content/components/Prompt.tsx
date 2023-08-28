@@ -15,7 +15,7 @@ import {
 import { usePromptDelete } from '../../../api/usePrompts/promptDelete'
 import { usePromptUpdate } from '../../../api/usePrompts/promptUpdate'
 import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
-import { neumorph } from '../../../shared/styles'
+import { neumorph } from '../../../shared/styles/styles'
 import { ActionIcon } from '../../../shared/components/ActionIcon'
 
 export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {

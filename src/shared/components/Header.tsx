@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { LiaArrowLeftSolid, LiaSignOutAltSolid } from 'react-icons/lia'
 
-import { neumorph } from '../styles'
+import { neumorph } from '../styles/styles'
 import { Button, Group, Title } from '@mantine/core'
 import { ActionIcon } from './ActionIcon'
 

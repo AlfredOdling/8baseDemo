@@ -6,7 +6,7 @@ import { Group, TextInput, Select, Stack, Textarea, Title } from '@mantine/core'
 
 import { Prompts } from './components/Prompts'
 import { useContent } from '../../api/useContent/content'
-import { neumorph } from '../../shared/styles'
+import { neumorph } from '../../shared/styles/styles'
 import { useContentUpdate } from '../../api/useContent/contentUpdate'
 import { Content } from './components/Content'
 import { usePromptsList } from '../../api/usePrompts/promptList'

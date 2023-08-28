@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { gql } from 'graphql-request'
 import { client8Base } from '../client'
-import { queryClient } from '../..'
+import { queryClient } from '../../App'
 
 export const useContentTextDelete = () => {
   const navigate = useNavigate()

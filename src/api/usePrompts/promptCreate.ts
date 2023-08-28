@@ -3,7 +3,7 @@ import { gql } from 'graphql-request'
 import { useAuth0 } from '@auth0/auth0-react'
 
 import { client8Base } from '../client'
-import { queryClient } from '../..'
+import { queryClient } from '../../App'
 
 export const usePromptCreate = () => {
   const { user } = useAuth0()
