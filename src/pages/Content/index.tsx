@@ -5,11 +5,9 @@ import {
   LiaLockSolid,
   LiaSpinnerSolid,
   LiaUnlockSolid,
-  LiaWeebly,
   LiaYoutube,
 } from 'react-icons/lia'
-import { useMediaQuery } from 'react-responsive'
-import { Group, TextInput, Select, Stack, Textarea, Title } from '@mantine/core'
+import { Group, TextInput, Stack, Title } from '@mantine/core'
 
 import { Prompts } from './components/Prompts'
 import { useContent } from '../../api/useContent/content'
@@ -21,12 +19,9 @@ import { ActionIcon } from '../../shared/components/ActionIcon'
 
 export function ContentPage() {
   const [selectValue, setSelectValue] = useState<string | null>('website')
-  const [textValue, setTextValue] = useState('')
-
   const { contentId } = useParams()
   const contentUpdate = useContentUpdate()
   const content = useContent(contentId!)
-  const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
   const [lock, setLock] = useState(false)
   const [urlValue, setUrlValue] = useState('')
   const promptsList = usePromptsList()
@@ -43,11 +38,9 @@ export function ContentPage() {
   const setValue = (value: string) => {
     setUrlValue(value)
 
-    if (value.includes('youtube')) {
-      setSelectValue('youtube')
-    } else {
-      setSelectValue('website')
-    }
+    value.includes('youtube')
+      ? setSelectValue('youtube')
+      : setSelectValue('website')
   }
 
   return (
@@ -94,13 +87,13 @@ export function ContentPage() {
             contentUpdate
               .mutateAsync({
                 id: contentId,
-                url: textValue || urlValue,
+                url: urlValue,
               })
               .then(() => {
                 setLock(!lock)
               })
           }
-          pulsate={!lock && (!!textValue || !!urlValue)}
+          pulsate={!lock && !!urlValue}
         >
           {lock ? (
             <LiaLockSolid />
@@ -112,18 +105,12 @@ export function ContentPage() {
         </ActionIcon>
       </Group>
 
-      {textValue ||
-        (urlValue && lock && (
-          <>
-            <Prompts
-              selectValue={selectValue}
-              urlValue={urlValue}
-              textValue={textValue}
-            />
-
-            <Content content={content} />
-          </>
-        ))}
+      {urlValue && lock && (
+        <>
+          <Prompts selectValue={selectValue} urlValue={urlValue} />
+          <Content content={content} />
+        </>
+      )}
     </Stack>
   )
 }

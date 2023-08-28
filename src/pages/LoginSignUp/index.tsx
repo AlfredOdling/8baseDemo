@@ -118,7 +118,7 @@ export function LoginSignUpPage() {
             }}
             color="blue"
           >
-            <Stack>
+            <Stack spacing={3}>
               <strong>Backend: </strong>
               <Anchor
                 referrerPolicy="no-referrer"
@@ -140,16 +140,13 @@ export function LoginSignUpPage() {
               </Anchor>
             </Stack>
 
-            <Stack mt={2}>
+            <Stack mt={15} spacing={3}>
               <strong>Frontend: </strong>
               <Anchor referrerPolicy="no-referrer" href="https://react.dev/">
                 - React
               </Anchor>
-              <Anchor
-                referrerPolicy="no-referrer"
-                href="https://mui.com/joy-ui/getting-started/"
-              >
-                - MUI Joy (Component library)
+              <Anchor referrerPolicy="no-referrer" href="https://mantine.dev/">
+                - Mantine (Component library)
               </Anchor>
               <Anchor
                 referrerPolicy="no-referrer"
@@ -168,7 +165,7 @@ export function LoginSignUpPage() {
               </Anchor>
             </Stack>
 
-            <Stack mt={2}>
+            <Stack mt={15} spacing={3}>
               <strong>Github </strong>
               <Anchor
                 referrerPolicy="no-referrer"

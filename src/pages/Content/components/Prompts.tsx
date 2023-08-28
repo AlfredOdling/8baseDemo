@@ -6,7 +6,7 @@ import { Prompt } from './Prompt'
 import { usePromptCreate } from '../../../api/usePrompts/promptCreate'
 import { usePromptsList } from '../../../api/usePrompts/promptList'
 
-export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
+export const Prompts = ({ selectValue, urlValue }: any) => {
   const promptCreate = usePromptCreate()
   const promptsList = usePromptsList()
   const { user } = useAuth0()
@@ -62,7 +62,6 @@ export const Prompts = ({ selectValue, textValue, urlValue }: any) => {
             item={item}
             selectValue={selectValue}
             urlValue={urlValue}
-            textValue={textValue}
           />
         ))}
       </Grid>

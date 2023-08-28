@@ -18,7 +18,7 @@ import { useContentTextCreate } from '../../../api/useContent/contentTextCreate'
 import { neumorph } from '../../../shared/styles/styles'
 import { ActionIcon } from '../../../shared/components/ActionIcon'
 
-export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
+export const Prompt = ({ item, selectValue, urlValue }: any) => {
   const [edit, setEdit] = useState(false)
   const [input, setInput] = useState(item.prompt)
   const { contentId } = useParams()
@@ -64,7 +64,6 @@ export const Prompt = ({ item, selectValue, urlValue, textValue }: any) => {
                   contentId: contentId,
                   type: selectValue,
                   url: urlValue,
-                  text: textValue,
                   prompt: item.prompt,
                 })
               }
