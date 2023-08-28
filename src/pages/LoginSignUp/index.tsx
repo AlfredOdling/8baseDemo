@@ -105,6 +105,7 @@ export function LoginSignUpPage() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <Alert
             sx={{
+              zIndex: 1000,
               position: 'absolute',
               top: '80px',
               //center position absolute responsive
