@@ -5,7 +5,6 @@ const {
   REACT_APP_NETLIFY_AUTH0_DOMAIN,
   REACT_APP_NETLIFY_AUTH0_CLIENT_ID,
 } = process.env
-console.log('🚀🚀🚀🚀  process.env:', process.env)
 
 export const env = {
   AUTH0_DOMAIN:

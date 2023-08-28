@@ -1,8 +1,9 @@
+import { useRef, useLayoutEffect } from 'react'
+import { Canvas, useThree } from '@react-three/fiber'
 import { motion } from 'framer-motion-3d'
 import { MotionConfig } from 'framer-motion'
-import { useRef, useLayoutEffect } from 'react'
+
 import { transition } from './settings'
-import { Canvas, useThree } from '@react-three/fiber'
 import { useSmoothTransform } from './use-smooth-transform'
 
 export function Shapes({ isHover, isPress, mouseX, mouseY }: any) {

@@ -2,12 +2,12 @@ import { motion } from 'framer-motion'
 import { LiaPlusSolid, LiaSpinnerSolid, LiaTrashSolid } from 'react-icons/lia'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
+import { ActionIcon, Button, Divider, Group, Stack, Title } from '@mantine/core'
 
 import { useContentCreate } from '../api/useContent/contentCreate'
 import { useContents } from '../api/useContent/contents'
 import { useContentDelete } from '../api/useContent/contentDelete'
 import { neumorph } from '../shared/styles/styles'
-import { ActionIcon, Button, Divider, Group, Stack, Title } from '@mantine/core'
 
 export function ContentsPage() {
   const navigate = useNavigate()

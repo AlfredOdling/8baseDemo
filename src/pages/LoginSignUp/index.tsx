@@ -2,11 +2,11 @@ import { Suspense, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { motion, MotionConfig, useMotionValue } from 'framer-motion'
 import useMeasure from 'react-use-measure'
+import { Alert, Anchor, Button, Stack } from '@mantine/core'
 
 import { Shapes } from './Shapes'
 import { transition } from './settings'
 import './styles.css'
-import { Alert, Anchor, Button, Stack } from '@mantine/core'
 
 export function LoginSignUpPage() {
   const { loginWithRedirect } = useAuth0()
@@ -108,7 +108,6 @@ export function LoginSignUpPage() {
               zIndex: 1000,
               position: 'absolute',
               top: '80px',
-              //center position absolute responsive
               left: '0',
               right: '0',
               marginLeft: 'auto',

@@ -93,7 +93,7 @@ export function ContentPage() {
                 setLock(!lock)
               })
           }
-          pulsate={!lock && !!urlValue}
+          pulsate={!lock && Boolean(urlValue)}
         >
           {lock ? (
             <LiaLockSolid />

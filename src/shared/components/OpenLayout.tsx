@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-
 import { Auth0ProviderWithRedirectCallback } from '../auth'
 
 export const OpenLayout = () => {
