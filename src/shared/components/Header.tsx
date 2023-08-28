@@ -28,7 +28,7 @@ export const Header = () => {
         <LiaArrowLeftSolid />
       </ActionIcon>
 
-      <Title>{user?.name}</Title>
+      <Title order={4}>{user?.name}</Title>
 
       <Group spacing={2}>
         <Button
