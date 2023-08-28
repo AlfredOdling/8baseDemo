@@ -1,4 +1,4 @@
-import { Modal, Stack, Text } from '@mantine/core'
+import { Modal, Stack, Title } from '@mantine/core'
 
 interface IContentModal {
   opened: boolean
@@ -13,7 +13,11 @@ export const BasicModal = (props: IContentModal) => {
     <Modal
       opened={opened}
       onClose={close}
-      title={item.prompt}
+      title={
+        <Title order={4} color="black !important">
+          {item.prompt}
+        </Title>
+      }
       closeButtonProps={{
         sx: {
           all: 'inherit',
@@ -25,7 +29,7 @@ export const BasicModal = (props: IContentModal) => {
           height: '400px',
         }}
       >
-        <Text color="black !important">{item.text}</Text>
+        {item.text}
       </Stack>
     </Modal>
   )
